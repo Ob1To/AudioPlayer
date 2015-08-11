@@ -8,13 +8,13 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-        <!--<Grid.Background>
+    <!--<Grid.Background>
             <LinearGradientBrush EndPoint="0.504,1.5" StartPoint="0.504,0.03">
                 <GradientStop Color="#FFFFC934" Offset="0"/>
                 <GradientStop Color="#FFFFFFFF" Offset="0.567"/>
             </LinearGradientBrush>
         </Grid.Background>-->
-        <!--<Grid.RowDefinitions>
+    <!--<Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="5*"/>
             <RowDefinition Height="18*"/>
@@ -42,11 +42,13 @@
                     Canvas.Top ="20"
                     FontSize="20" >
                 </TextBlock>
-                
-                
             </Canvas>
         </Border>-->
-
+    <!--<Page.Resources>
+        <UserControl.Resources>
+            <Image x:Key="MyImage" Source="Assets/button_play.png"/>
+        </UserControl.Resources>
+    </Page.Resources>-->
     <Grid Background="{StaticResource BrushOne}">
         <Grid.RowDefinitions>
             <RowDefinition Height="1.5*"/>
@@ -56,21 +58,50 @@
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*" />
             <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
         </Grid.ColumnDefinitions>
-        
+
         <Image
             Grid.Row="0"
             Grid.Column="0"
             Grid.RowSpan="3"
-            Source="/Assets/icon.png"/>
+            Source="/Assets/cloud-icon.png"/>
 
-        <StackPanel Orientation="Horizontal"
-                    Grid.Row="2"
-                    Grid.Column="1">
-            <Button
-                />
-        </StackPanel>
+        <Button Grid.Row="2" 
+                Grid.Column="1" 
+                HorizontalAlignment="Center" 
+                BorderBrush="Transparent">
+            <Button.Background>
+                <ImageBrush ImageSource="Assets/button_left.png" Stretch="Uniform"/>
+            </Button.Background>
+        </Button>
+        <Button Grid.Row="2" 
+                Grid.Column="2" 
+                HorizontalAlignment="Center" 
+                BorderBrush="Transparent">
+            <Button.Background>
+                <ImageBrush ImageSource="Assets/button_play.png" Stretch="Uniform"/>
+            </Button.Background>
+        </Button>
+        <Button Grid.Row="2" 
+                Grid.Column="3" 
+                HorizontalAlignment="Center" 
+                BorderBrush="Transparent">
+            <Button.Background>
+                <ImageBrush ImageSource="Assets/button_stop.png" Stretch="Uniform"/>
+            </Button.Background>
+        </Button>
+        <Button Grid.Row="2" 
+                Grid.Column="4" 
+                HorizontalAlignment="Center" 
+                BorderBrush="Transparent">
+            <Button.Background>
+                <ImageBrush ImageSource="Assets/button_right.png" Stretch="Uniform"/>
+            </Button.Background>
+        </Button>
     </Grid>
 </Page>
