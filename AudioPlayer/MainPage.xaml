@@ -9,8 +9,37 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <Button>
-            TEST Trest
-        </Button>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="18*"/>
+        </Grid.RowDefinitions>
+
+        <Grid 
+            Background="#E97C35"
+            Grid.Row="0">
+        </Grid>
+        <Border 
+            HorizontalAlignment="Stretch" 
+            VerticalAlignment="Stretch"
+            Background="White"
+            Grid.Row="1">
+            <Canvas >
+                <Image 
+                    x:Name="image"
+                    Source="./Assets/icon.png" 
+                    Width="123" 
+                    Height="130"/>
+                <TextBlock
+                    Text="Name"
+                    Foreground="Black"
+                    Canvas.Left="150"
+                    Canvas.Top ="20"
+                    FontSize="20" >
+                </TextBlock>
+                
+                
+            </Canvas>
+        </Border>
     </Grid>
 </Page>
