@@ -3,8 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Text;
+using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
+using Windows.Storage.Pickers;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -25,7 +29,6 @@ namespace AudioPlayer
         public MainPage()
         {
             this.InitializeComponent();
-
             this.NavigationCacheMode = NavigationCacheMode.Required;
         }
 
@@ -43,6 +46,41 @@ namespace AudioPlayer
             // Windows.Phone.UI.Input.HardwareButtons.BackPressed event.
             // If you are using the NavigationHelper provided by some templates,
             // this event is handled for you.
+        }
+
+        private void CheckSDCardClick(object sender, RoutedEventArgs e)
+        {
+            GetFilesFromSDCard();
+        }
+
+        private async void GetFilesFromSDCard()
+        {
+            try
+            {
+                StorageFolder externalDevices = KnownFolders.RemovableDevices;
+                StorageFolder sdCard = (await externalDevices.GetFoldersAsync()).FirstOrDefault();
+                if (sdCard != null)
+                {
+                    var folderInfo = new StringBuilder();
+                    folderInfo.AppendLine("SD card content:");
+
+                    var files = await sdCard.GetItemsAsync();
+                    foreach (var file in files)
+                    {
+                        folderInfo.AppendLine(file.Name);
+                    }
+                    this.TextBlockFiles.Text = folderInfo.ToString();
+                }
+                else
+                {
+                    this.TextBlockFiles.Text = "No SD card is present";
+                }
+
+            }
+            catch (Exception ex)
+            {
+                this.TextBlockFiles.Text = ex.Message;
+            }
         }
     }
 }

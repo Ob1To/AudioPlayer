@@ -7,7 +7,21 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+    <Page.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="25"/>
+            <Setter Property="Foreground" Value="Black"/>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+        </Style>
+        <Style TargetType="Border">
+            <Setter Property="BorderBrush" Value="Black"/>
+        </Style>
+    </Page.Resources>
     <Grid Background="{StaticResource BrushOne}">
         <Grid.RowDefinitions>
             <RowDefinition Height="1.5*"/>
@@ -47,7 +61,7 @@
             Height="33" >
 
         </ProgressBar>
-        
+
         <Image
             Grid.Row="0"
             Grid.Column="0"
@@ -55,50 +69,56 @@
             Source="/Assets/cloud-icon.png"/>
 
         <Button Grid.Row="2" 
-                Grid.Column="1" 
-                HorizontalAlignment="Center" 
-                BorderBrush="Transparent">
+                Grid.Column="1">
             <Button.Background>
                 <ImageBrush ImageSource="Assets/button_left.png" Stretch="Uniform"/>
             </Button.Background>
         </Button>
-        
+
         <Button Grid.Row="2" 
-                Grid.Column="2" 
-                HorizontalAlignment="Center" 
-                BorderBrush="Transparent">
+                Grid.Column="2">
             <Button.Background>
                 <ImageBrush ImageSource="Assets/button_play.png" Stretch="Uniform"/>
             </Button.Background>
         </Button>
-        
-        <Button Grid.Row="2" 
-                Grid.Column="3" 
-                HorizontalAlignment="Center" 
-                BorderBrush="Transparent">
+
+        <Button 
+                Grid.Row="2"
+                Grid.Column="3">
             <Button.Background>
                 <ImageBrush ImageSource="Assets/button_stop.png" Stretch="Uniform"/>
             </Button.Background>
         </Button>
-        
+
         <Button Grid.Row="2" 
-                Grid.Column="4" 
-                HorizontalAlignment="Center" 
-                BorderBrush="Transparent">
+                Grid.Column="4">
             <Button.Background>
                 <ImageBrush ImageSource="Assets/button_right.png" Stretch="Uniform"/>
             </Button.Background>
         </Button>
-        
-        <Border Grid.Row="3" 
-        BorderBrush="Black" 
+
+        <Border Grid.Row="3"
         BorderThickness="0,0,0,3" 
         Grid.ColumnSpan="6" />
-        
+
         <Border Grid.Row="5"
-        BorderBrush="Black"
         BorderThickness="0,3,0,0"
         Grid.ColumnSpan="6"/>
-        
+
+        <TextBlock
+            TextWrapping="Wrap"
+            Text="This Is A Test"
+            Name="TextBlockFiles"
+            Grid.Row="4"
+            Grid.ColumnSpan="6"/>
+
+        <Button Name="btnOpenAudioFile"
+                Click="CheckSDCardClick"
+                Grid.Row="5" 
+                Grid.Column="4">
+            <Button.Background>
+                <ImageBrush ImageSource="Assets/LoadButton.png" Stretch="Uniform"/>
+            </Button.Background>
+        </Button>
     </Grid>
 </Page>
