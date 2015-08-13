@@ -27,10 +27,8 @@ namespace AudioPlayer
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        PlaylistVM myPlaylist = new PlaylistVM();
-        Song currentSong = new Song();
-        MediaElement mediaElement = new MediaElement();
-
+        private PlaylistVM myPlaylist = new PlaylistVM();
+        private Song currentSong = new Song();
 
         public MainPage()
         {
@@ -90,7 +88,7 @@ namespace AudioPlayer
 
         private void On_Button_Play_Click(object sender, RoutedEventArgs e)
         {
-            mediaElement.AutoPlay = true;
+           // mediaElement.AutoPlay = true;
             mediaElement.Source = new Uri(currentSong.Path, UriKind.RelativeOrAbsolute);
             mediaElement.Play();
         }
