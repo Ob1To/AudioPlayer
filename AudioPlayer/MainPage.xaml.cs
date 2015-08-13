@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AudioPlayer.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -26,9 +27,15 @@ namespace AudioPlayer
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        string name;
+
+        private PlaylistVM myPlaylist = new PlaylistVM();
+
         public MainPage()
         {
             this.InitializeComponent();
+
+       
             this.NavigationCacheMode = NavigationCacheMode.Required;
         }
 
@@ -48,39 +55,49 @@ namespace AudioPlayer
             // this event is handled for you.
         }
 
-        private void CheckSDCardClick(object sender, RoutedEventArgs e)
+        private void On_Button_Add_Click(object sender, RoutedEventArgs e)
         {
-            GetFilesFromSDCard();
+            //TextBlockFiles.Text = "";
+
+            var openPicker = new FileOpenPicker();
+            openPicker.ViewMode = PickerViewMode.List;
+            openPicker.SuggestedStartLocation = PickerLocationId.HomeGroup;
+            openPicker.FileTypeFilter.Add(".mp3");
+            openPicker.PickMultipleFilesAndContinue();
         }
 
-        private async void GetFilesFromSDCard()
+        private void DisplayFiles(StorageFile[] files)
         {
-            try
+            if (files != null)
             {
-                StorageFolder externalDevices = KnownFolders.RemovableDevices;
-                StorageFolder sdCard = (await externalDevices.GetFoldersAsync()).FirstOrDefault();
-                if (sdCard != null)
+                name = files[0].Path;
+                foreach (var item in files)
                 {
-                    var folderInfo = new StringBuilder();
-                    folderInfo.AppendLine("SD card content:");
-
-                    var files = await sdCard.GetItemsAsync();
-                    foreach (var file in files)
-                    {
-                        folderInfo.AppendLine(file.Name);
-                    }
-                    this.TextBlockFiles.Text = folderInfo.ToString();
-                }
-                else
-                {
-                    this.TextBlockFiles.Text = "No SD card is present";
+                    Song newSong = new Song(item.Name, item.Path);
+                    myPlaylist.AddSong(newSong);
                 }
 
+                //CHECK
+           
+                var sb = new StringBuilder();
+                foreach(var item in myPlaylist.ListOfSongs)
+                {
+                    sb.AppendLine(item.Key);
+                }
+                //this.TextBlockFiles.Text = sb.ToString();
             }
-            catch (Exception ex)
-            {
-                this.TextBlockFiles.Text = ex.Message;
-            }
+        }
+
+        internal void PhonePickedFiles(FileOpenPickerContinuationEventArgs arguments)
+        {
+            var files = arguments.Files;
+            DisplayFiles(files.ToArray());
+        }
+
+        private void On_Button_Play_Click(object sender, RoutedEventArgs e)
+        {
+            //myMediaElement.Source = new Uri(name, UriKind.RelativeOrAbsolute);
+            //myMediaElement.Play();
         }
     }
 }

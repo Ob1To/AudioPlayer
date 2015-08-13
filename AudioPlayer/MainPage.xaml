@@ -75,7 +75,9 @@
             </Button.Background>
         </Button>
 
-        <Button Grid.Row="2" 
+        <Button
+                Click="On_Button_Play_Click"
+                Grid.Row="2" 
                 Grid.Column="2">
             <Button.Background>
                 <ImageBrush ImageSource="Assets/button_play.png" Stretch="Uniform"/>
@@ -105,15 +107,32 @@
         BorderThickness="0,3,0,0"
         Grid.ColumnSpan="6"/>
 
-        <TextBlock
-            TextWrapping="Wrap"
-            Text="This Is A Test"
-            Name="TextBlockFiles"
+        <!--<ListBox 
+                 Name="listBox"
+                 ItemsSource="{Binding ListOfSongs} "
+                 Grid.Row="4"
+                 Grid.ColumnSpan="6">
+            <ListBoxItem>
+                <DataTemplate>
+                    <TextBlock
+                        Text="{Binding ListOfSongs.Key}"
+                        Name="listBoxItemTextBlock"
+                        FontSize="25">
+                    </TextBlock>
+                </DataTemplate>
+            </ListBoxItem>
+        </ListBox>-->
+        
+        <!--<MediaElement 
             Grid.Row="4"
-            Grid.ColumnSpan="6"/>
-
-        <Button Name="btnOpenAudioFile"
-                Click="CheckSDCardClick"
+            Grid.Column="5"
+            Name="myMediaElement" 
+                      AutoPlay="True" 
+                      />-->
+            
+        <Button 
+                Name="AddButton"
+                Click="On_Button_Add_Click"
                 Grid.Row="5" 
                 Grid.Column="4">
             <Button.Background>

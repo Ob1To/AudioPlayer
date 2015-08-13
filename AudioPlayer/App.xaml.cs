@@ -104,6 +104,23 @@ namespace AudioPlayer
             Window.Current.Activate();
         }
 
+#if WINDOWS_PHONE_APP
+        
+        protected override void OnActivated(IActivatedEventArgs args)
+        {
+            base.OnActivated(args);
+
+            var root = Window.Current.Content as Frame;
+            var mainPage = root.Content as MainPage;
+
+
+            var arguments = args as FileOpenPickerContinuationEventArgs;
+            if (mainPage != null)
+            {
+                mainPage.PhonePickedFiles(arguments);
+            }
+        }  
+                 
         /// <summary>
         /// Restores the content transitions after the app has launched.
         /// </summary>
@@ -115,7 +132,7 @@ namespace AudioPlayer
             rootFrame.ContentTransitions = this.transitions ?? new TransitionCollection() { new NavigationThemeTransition() };
             rootFrame.Navigated -= this.RootFrame_FirstNavigated;
         }
-
+#endif
         /// <summary>
         /// Invoked when application execution is being suspended.  Application state is saved
         /// without knowing whether the application will be terminated or resumed with the contents
