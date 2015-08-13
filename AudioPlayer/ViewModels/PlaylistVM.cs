@@ -8,41 +8,25 @@ namespace AudioPlayer.ViewModels
 {
     public class PlaylistVM : BaseVM
     {
-        private Dictionary<string, string> listOfSongs;
-
-        public Dictionary<string, string> ListOfSongs
+        private List<Song> songs;
+        public List<Song> Songs
         {
             get
             {
-                return this.listOfSongs;
+                return this.songs;
             }
             set
             {
-                if (this.listOfSongs == null)
+                if (this.songs == null)
                 {
-                    this.listOfSongs = new Dictionary<string, string>();
+                    this.songs = new List<Song>();
                 }
                 if (value != null)
                 {
-                    this.listOfSongs = value;
-                    OnPropertyChanged("ListOfSongs");
+                    this.songs = value;
+                    OnPropertyChanged("Songs");
                 }
             }
-        }
-
-        public PlaylistVM()
-        {
-            this.ListOfSongs = new Dictionary<string, string>();
-        }
-
-        public PlaylistVM(Dictionary<string,string> playlist) : base()
-        {
-            this.ListOfSongs = playlist;
-        }
-
-        public void AddSong(Song song)
-        {
-            this.ListOfSongs.Add(song.Title, song.Path);
         }
     }
 }

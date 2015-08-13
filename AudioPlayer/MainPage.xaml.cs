@@ -27,14 +27,12 @@ namespace AudioPlayer
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        string name;
-
-        private PlaylistVM myPlaylist = new PlaylistVM();
+        PlaylistVM myPlaylist = new PlaylistVM();
 
         public MainPage()
         {
             this.InitializeComponent();
-
+            this.DataContext = myPlaylist;
             this.NavigationCacheMode = NavigationCacheMode.Required;
         }
 
@@ -56,7 +54,6 @@ namespace AudioPlayer
 
         private void On_Button_Add_Click(object sender, RoutedEventArgs e)
         {
-            //TextBlockFiles.Text = "";
 
             var openPicker = new FileOpenPicker();
             openPicker.ViewMode = PickerViewMode.List;
@@ -67,23 +64,18 @@ namespace AudioPlayer
 
         private void DisplayFiles(StorageFile[] files)
         {
+            
             if (files != null)
             {
-                name = files[0].Path;
+                List<Song> newList = new List<Song>();
+
                 foreach (var item in files)
                 {
                     Song newSong = new Song(item.Name, item.Path);
-                    myPlaylist.AddSong(newSong);
+                    newList.Add(newSong);
                 }
 
-                //CHECK
-
-                var sb = new StringBuilder();
-                foreach (var item in myPlaylist.ListOfSongs)
-                {
-                    sb.AppendLine(item.Key);
-                }
-                //this.TextBlockFiles.Text = sb.ToString();
+                myPlaylist.Songs = newList;
             }
         }
 

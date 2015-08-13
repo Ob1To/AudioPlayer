@@ -111,6 +111,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\button_delete.png" />
     <Content Include="Assets\button_left.png" />
     <Content Include="Assets\button_pause.png" />
     <Content Include="Assets\button_play.png" />
