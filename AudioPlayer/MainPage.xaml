@@ -10,7 +10,7 @@
     <Page.Resources>
         <Style TargetType="TextBlock">
             <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Bottom"/>
             <Setter Property="FontSize" Value="25"/>
             <Setter Property="Foreground" Value="Black"/>
         </Style>
@@ -107,31 +107,41 @@
         BorderThickness="0,3,0,0"
         Grid.ColumnSpan="6"/>
 
-        <ListBox 
-                 Name="listBox"
-                 ItemsSource="{Binding ListOfSongs}"
+        <ListBox ItemsSource="{Binding Songs}"
                  Grid.Row="4"
                  Grid.ColumnSpan="6">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel>
+                    <Grid VariableSizedWrapGrid.ColumnSpan="6">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="5*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        
                         <TextBlock
-                        Text="{Binding ListOfSongs.Key}"
-                        Name="listBoxItemTextBlock"
-                        FontSize="25">
-                        </TextBlock>
-                    </StackPanel>
+                            Grid.Column="0"
+                            FontSize="25"
+                            Text="{Binding Title}"/>
+                        <Button Grid.Column="1">
+                            <Button.Background>
+                                <ImageBrush 
+                                Stretch="Uniform" 
+                                ImageSource="Assets/button_delete.png"/>
+                            </Button.Background>
+                        </Button>
+                        
+                    </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        
+
         <!--<MediaElement 
             Grid.Row="4"
             Grid.Column="5"
             Name="myMediaElement" 
                       AutoPlay="True" 
                       />-->
-            
+
         <Button 
                 Name="AddButton"
                 Click="On_Button_Add_Click"
