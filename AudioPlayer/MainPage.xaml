@@ -109,7 +109,7 @@
 
         <ListBox 
                  Name="listBox"
-                 ItemsSource="{Binding ListOfSongs} "
+                 ItemsSource="{Binding ListOfSongs}"
                  Grid.Row="4"
                  Grid.ColumnSpan="6">
             <ListBox.ItemTemplate>

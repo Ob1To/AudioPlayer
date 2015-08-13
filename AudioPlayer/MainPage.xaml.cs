@@ -34,7 +34,7 @@ namespace AudioPlayer
         public MainPage()
         {
             this.InitializeComponent();
-       
+
             this.NavigationCacheMode = NavigationCacheMode.Required;
         }
 
@@ -77,9 +77,9 @@ namespace AudioPlayer
                 }
 
                 //CHECK
-           
+
                 var sb = new StringBuilder();
-                foreach(var item in myPlaylist.ListOfSongs)
+                foreach (var item in myPlaylist.ListOfSongs)
                 {
                     sb.AppendLine(item.Key);
                 }
