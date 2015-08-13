@@ -107,21 +107,23 @@
         BorderThickness="0,3,0,0"
         Grid.ColumnSpan="6"/>
 
-        <!--<ListBox 
+        <ListBox 
                  Name="listBox"
                  ItemsSource="{Binding ListOfSongs} "
                  Grid.Row="4"
                  Grid.ColumnSpan="6">
-            <ListBoxItem>
+            <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock
+                    <StackPanel>
+                        <TextBlock
                         Text="{Binding ListOfSongs.Key}"
                         Name="listBoxItemTextBlock"
                         FontSize="25">
-                    </TextBlock>
+                        </TextBlock>
+                    </StackPanel>
                 </DataTemplate>
-            </ListBoxItem>
-        </ListBox>-->
+            </ListBox.ItemTemplate>
+        </ListBox>
         
         <!--<MediaElement 
             Grid.Row="4"

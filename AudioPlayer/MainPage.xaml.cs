@@ -34,7 +34,6 @@ namespace AudioPlayer
         public MainPage()
         {
             this.InitializeComponent();
-
        
             this.NavigationCacheMode = NavigationCacheMode.Required;
         }
