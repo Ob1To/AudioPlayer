@@ -28,6 +28,9 @@ namespace AudioPlayer
     public sealed partial class MainPage : Page
     {
         PlaylistVM myPlaylist = new PlaylistVM();
+        Song currentSong = new Song();
+        MediaElement mediaElement = new MediaElement();
+
 
         public MainPage()
         {
@@ -87,8 +90,18 @@ namespace AudioPlayer
 
         private void On_Button_Play_Click(object sender, RoutedEventArgs e)
         {
-            //myMediaElement.Source = new Uri(name, UriKind.RelativeOrAbsolute);
-            //myMediaElement.Play();
+            mediaElement.AutoPlay = true;
+            mediaElement.Source = new Uri(currentSong.Path, UriKind.RelativeOrAbsolute);
+            mediaElement.Play();
+        }
+
+        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Song myObject = (sender as ListBox).SelectedItem as Song;
+            if (myObject != null)
+            {
+                currentSong = myObject;
+            }
         }
     }
 }

@@ -111,6 +111,7 @@
                  Grid.Row="4"
                  Grid.Column="0"
                  Grid.ColumnSpan="6"
+                 SelectionChanged="ListBox_SelectionChanged"
                  HorizontalContentAlignment="Stretch">
             <ListBox.ItemTemplate>
                 <DataTemplate>

@@ -40,6 +40,11 @@ namespace AudioPlayer.ViewModels
             }
         }
 
+        public Song()
+        {
+
+        }
+
         public Song(string title,string path)
         {
             this.Title = title;
