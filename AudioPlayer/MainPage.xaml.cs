@@ -91,6 +91,8 @@ namespace AudioPlayer
            // mediaElement.AutoPlay = true;
             mediaElement.Source = new Uri(currentSong.Path, UriKind.RelativeOrAbsolute);
             mediaElement.Play();
+
+            this.mediaElementTextBlock.Text = currentSong.Title.Substring(0,currentSong.Title.Length - 4);
         }
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
