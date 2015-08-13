@@ -109,10 +109,12 @@
 
         <ListBox ItemsSource="{Binding Songs}"
                  Grid.Row="4"
-                 Grid.ColumnSpan="6">
+                 Grid.Column="0"
+                 Grid.ColumnSpan="6"
+                 HorizontalContentAlignment="Stretch">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Grid VariableSizedWrapGrid.ColumnSpan="6">
+                    <Grid Height="40">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="5*"/>
                             <ColumnDefinition Width="1*"/>
@@ -133,6 +135,11 @@
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                </Style>
+            </ListBox.ItemContainerStyle>
         </ListBox>
 
         <!--<MediaElement 
