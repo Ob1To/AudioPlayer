@@ -37,7 +37,7 @@
             <ColumnDefinition Width="1*" />
             <ColumnDefinition Width="1*" />
             <ColumnDefinition Width="1*" />
-            <ColumnDefinition Width="0.5*" />
+            <ColumnDefinition Width="0.6*" />
         </Grid.ColumnDefinitions>
 
         <MediaElement 
@@ -50,13 +50,18 @@
             Name="mediaElementTextBlock"
             Grid.Row="0"
             Grid.Column="1"
-            Grid.ColumnSpan="5"
-            FontSize="20"/>
-        <TextBlock
-            Grid.Row="1"
-            Grid.Column="1"
+            Grid.ColumnSpan="4"
             VerticalAlignment="Center"
             HorizontalAlignment="Center"
+            FontSize="20"/>
+        
+        <TextBlock
+            Grid.Row="2"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            VerticalAlignment="Center"
+            Margin="5,0,0,0"
+            HorizontalAlignment="Left"
             Text="00:00"
             FontSize="15"
             Foreground="Black"/>
@@ -65,13 +70,13 @@
             Name="sliderBar"
             Grid.Row="2"
             Grid.Column="0"
-            Margin="20,0,0,0"
+            Margin="50,0,0,0"
             BorderBrush="Transparent"
-            VerticalAlignment="Bottom"
-            Grid.ColumnSpan="5"
+            VerticalAlignment="Center"
+            Grid.ColumnSpan="6"
             Foreground="Bisque"
             Background="White"
-            BorderThickness="0"/>
+            BorderThickness="0" HorizontalAlignment="Left" Grid.RowSpan="2" Width="339"/>
 
         <Image
             Grid.Row="0"
@@ -80,7 +85,8 @@
             Source="/Assets/cloud-icon.png"/>
 
         <Button Grid.Row="1" 
-                Grid.Column="1">
+                Grid.Column="1"
+                Grid.ColumnSpan="1">
             <Button.Background>
                 <ImageBrush ImageSource="Assets/button_left.png" Stretch="Uniform"/>
             </Button.Background>

@@ -84,9 +84,12 @@ namespace AudioPlayer
 
         private void On_Button_Play_Click(object sender, RoutedEventArgs e)
         {
-            mediaElement.Source = new Uri(currentSong.Path, UriKind.RelativeOrAbsolute);
-            mediaElement.Play();
-            this.mediaElementTextBlock.Text = currentSong.Title.Substring(0, currentSong.Title.Length - 4);
+            if (currentSong.Path != null)
+            {
+                mediaElement.Source = new Uri(currentSong.Path, UriKind.RelativeOrAbsolute);
+                mediaElement.Play();
+                this.mediaElementTextBlock.Text = currentSong.Title.Substring(0, currentSong.Title.Length - 4);
+            }
         }
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
