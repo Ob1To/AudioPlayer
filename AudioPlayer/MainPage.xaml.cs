@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -64,7 +65,7 @@ namespace AudioPlayer
         {
             var openPicker = new FileOpenPicker();
             openPicker.ViewMode = PickerViewMode.List;
-            openPicker.FileTypeFilter.Add(".mp3");
+            openPicker.FileTypeFilter.Add("*");
             openPicker.PickMultipleFilesAndContinue();
         }
 
@@ -231,7 +232,10 @@ namespace AudioPlayer
             }
         }
 
-        
+        private void SavePlaylist_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
 
         //private double SliderFrequency(TimeSpan timevalue)
         //{

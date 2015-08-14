@@ -54,7 +54,7 @@
             VerticalAlignment="Center"
             HorizontalAlignment="Center"
             FontSize="20"/>
-        
+
         <TextBlock
             Grid.Row="2"
             Grid.Column="0"
@@ -162,7 +162,7 @@
             </ListBox.ItemTemplate>
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
-                    
+
                     <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                 </Style>
             </ListBox.ItemContainerStyle>
@@ -182,6 +182,16 @@
                 Grid.Column="4">
             <Button.Background>
                 <ImageBrush ImageSource="Assets/LoadButton.png" Stretch="Uniform"/>
+            </Button.Background>
+        </Button>
+
+        <Button 
+            Name="SavePlaylist"
+            Click="SavePlaylist_Click"
+            Grid.Row="5" 
+            Grid.Column="3">
+            <Button.Background>
+                <ImageBrush ImageSource="Assets/Save-Playlis-Icon.png" Stretch="Uniform"/>
             </Button.Background>
         </Button>
     </Grid>
