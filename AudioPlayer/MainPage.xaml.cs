@@ -29,8 +29,8 @@ namespace AudioPlayer
     {
         private PlaylistVM myPlaylist = new PlaylistVM();
         private Song currentSong = new Song();
-        private DispatcherTimer _timer;
-        private bool _sliderpressed = false;
+        private DispatcherTimer timer;
+        private bool isSliderPressed = false;
 
         public MainPage()
         {
@@ -47,7 +47,6 @@ namespace AudioPlayer
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             // TODO: Prepare page for display here.
-
             // TODO: If your application contains multiple pages, ensure that you are
             // handling the hardware Back button by registering for the
             // Windows.Phone.UI.Input.HardwareButtons.BackPressed event.
@@ -55,33 +54,18 @@ namespace AudioPlayer
             // this event is handled for you.
         }
 
+        /// <summary>
+        /// Click Button Methods
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+
         private void On_Button_Add_Click(object sender, RoutedEventArgs e)
         {
             var openPicker = new FileOpenPicker();
             openPicker.ViewMode = PickerViewMode.List;
-            //openPicker.SuggestedStartLocation = PickerLocationId.HomeGroup;
             openPicker.FileTypeFilter.Add(".mp3");
             openPicker.PickMultipleFilesAndContinue();
-        }
-
-        private void DisplayFiles(StorageFile[] files)
-        {
-            if (files != null)
-            {
-                List<Song> newList = new List<Song>();
-                foreach (var item in files)
-                {
-                    Song newSong = new Song(item.Name, item.Path);
-                    newList.Add(newSong);
-                }
-                myPlaylist.Songs = newList;
-            }
-        }
-
-        internal void PhonePickedFiles(FileOpenPickerContinuationEventArgs arguments)
-        {
-            var files = arguments.Files;
-            DisplayFiles(files.ToArray());
         }
 
         private void On_Button_Play_Click(object sender, RoutedEventArgs e)
@@ -89,53 +73,19 @@ namespace AudioPlayer
             if (currentSong.Path != null)
             {
                 Play_Media_Element();
-                //mediaElement.Source = new Uri(currentSong.Path, UriKind.RelativeOrAbsolute);
+
                 SetupTimer();
                 TimeSpan recordingTime = mediaElement.NaturalDuration.TimeSpan;
                 AudioPlayerSeek.Maximum = recordingTime.TotalSeconds;
                 AudioPlayerSeek.SmallChange = 1;
                 AudioPlayerSeek.LargeChange = Math.Min(10, recordingTime.Seconds / 10);
-                //mediaElement.Play();
-                //this.mediaElementTextBlock.Text = currentSong.Title.Substring(0, currentSong.Title.Length - 4);
+
             }
         }
 
-        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void On_Button_Stop_Click(object sender, RoutedEventArgs e)
         {
-            Song myObject = (sender as ListBox).SelectedItem as Song;
-            if (myObject != null)
-            {
-                currentSong = myObject;
-            }
-        }
-
-        private void AudioPlayerSeek_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
-        {
-            if (!_sliderpressed)
-            {
-                mediaElement.Position = TimeSpan.FromSeconds(e.NewValue);
-            }
-        }
-
-        private void SetupTimer()
-        {
-            _timer = new DispatcherTimer();
-            _timer.Interval = TimeSpan.FromSeconds(AudioPlayerSeek.StepFrequency);
-            StartTimer();
-        }
-
-        private void StartTimer()
-        {
-            _timer.Tick += _timer_Tick;
-            _timer.Start();
-        }
-
-        private void _timer_Tick(object sender, object e)
-        {
-            if (!_sliderpressed)
-            {
-                AudioPlayerSeek.Value = mediaElement.Position.TotalSeconds;
-            }
+            this.mediaElement.Stop();
         }
 
         private void On_Button_Previous_Click(object sender, RoutedEventArgs e)
@@ -174,17 +124,114 @@ namespace AudioPlayer
             }
         }
 
-        private void On_Button_Stop_Click(object sender, RoutedEventArgs e)
+        private void On_Button_Delete_Click(object sender, RoutedEventArgs e)
         {
-            mediaElement.Stop();
+            Button button = (Button)sender ;
+            Song dataObject = (Song)button.DataContext ;
+            //int index = .IndexOf(dataObject);
+            myPlaylist.deleteSong(dataObject);
+        }
+
+        /// <summary>
+        /// OnChanged Metheds
+        /// </summary>
+        /// <param name="files"></param>
+
+        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Song myObject = (sender as ListBox).SelectedItem as Song;
+            if (myObject != null)
+            {
+                currentSong = myObject;
+            }
+        }
+
+        private void AudioPlayerSeek_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
+        {
+            if (!isSliderPressed)
+            {
+                mediaElement.Position = TimeSpan.FromSeconds(e.NewValue);
+            }
+        }
+
+        private void Grid_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
+        {
+            SliderSetter();
+            Play_Media_Element();
+        }
+
+        /// <summary>
+        /// Helpers
+        /// </summary>
+        /// <param name="files"></param>
+
+        private void DisplayFiles(StorageFile[] files)
+        {
+            if (files != null)
+            {
+                List<Song> newList = new List<Song>();
+                foreach (var item in files)
+                {
+                    Song newSong = new Song(item.Name, item.Path);
+                    newList.Add(newSong);
+                }
+
+                if (myPlaylist.Songs != null)
+                {
+                    foreach (var item in myPlaylist.Songs)
+                    {
+                        newList.Add(item);
+                    }
+                }
+                myPlaylist.Songs = newList;
+            }
+        }
+
+        internal void PhonePickedFiles(FileOpenPickerContinuationEventArgs arguments)
+        {
+            var files = arguments.Files;
+            DisplayFiles(files.ToArray());
         }
 
         private void Play_Media_Element()
         {
-            mediaElement.Source = new Uri(currentSong.Path, UriKind.RelativeOrAbsolute);
-            mediaElement.Play();
+
             this.mediaElementTextBlock.Text = currentSong.Title.Substring(0, currentSong.Title.Length - 4);
+            this.mediaElement.Source = new Uri(currentSong.Path, UriKind.RelativeOrAbsolute);
+            this.mediaElement.Play();
         }
+
+        private void SliderSetter()
+        {
+            SetupTimer();
+            TimeSpan recordingTime = mediaElement.NaturalDuration.TimeSpan;
+            AudioPlayerSeek.Maximum = recordingTime.TotalSeconds;
+            AudioPlayerSeek.SmallChange = 1;
+            AudioPlayerSeek.LargeChange = Math.Min(10, recordingTime.Seconds / 10);
+        }
+
+        private void SetupTimer()
+        {
+            timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(AudioPlayerSeek.StepFrequency);
+            StartTimer();
+        }
+
+        private void StartTimer()
+        {
+            timer.Tick += Timer_Tick;
+            timer.Start();
+        }
+
+        private void Timer_Tick(object sender, object e)
+        {
+            if (!isSliderPressed)
+            {
+                AudioPlayerSeek.Value = mediaElement.Position.TotalSeconds;
+            }
+        }
+
+        
 
         //private double SliderFrequency(TimeSpan timevalue)
         //{

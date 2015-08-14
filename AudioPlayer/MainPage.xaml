@@ -137,7 +137,8 @@
                  HorizontalContentAlignment="Stretch">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Grid Height="40">
+                    <Grid Height="40"
+                          DoubleTapped="Grid_DoubleTapped">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="5*"/>
                             <ColumnDefinition Width="1*"/>
@@ -147,7 +148,8 @@
                             Grid.Column="0"
                             FontSize="25"
                             Text="{Binding Title}"/>
-                        <Button Grid.Column="1">
+                        <Button Grid.Column="1"
+                                Click="On_Button_Delete_Click">
                             <Button.Background>
                                 <ImageBrush 
                                 Stretch="Uniform" 
@@ -160,6 +162,7 @@
             </ListBox.ItemTemplate>
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
+                    
                     <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                 </Style>
             </ListBox.ItemContainerStyle>

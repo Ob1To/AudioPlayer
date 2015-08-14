@@ -28,5 +28,11 @@ namespace AudioPlayer.ViewModels
                 }
             }
         }
+
+        public void deleteSong(Song s)
+        {
+            this.songs.Remove(s);
+            OnPropertyChanged("Songs");
+        }
     }
 }
