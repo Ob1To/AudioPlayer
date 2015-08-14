@@ -67,10 +67,11 @@
             Foreground="Black"/>
 
         <Slider
-            Name="sliderBar"
+            Name="AudioPlayerSeek"
+            ValueChanged="AudioPlayerSeek_ValueChanged"
             Grid.Row="2"
             Grid.Column="0"
-            Margin="50,0,0,0"
+            Margin="50,0,10,0"
             BorderBrush="Transparent"
             VerticalAlignment="Center"
             Grid.ColumnSpan="6"
@@ -84,33 +85,36 @@
             Grid.RowSpan="3"
             Source="/Assets/cloud-icon.png"/>
 
-        <Button Grid.Row="1" 
-                Grid.Column="1"
-                Grid.ColumnSpan="1">
+        <Button Grid.Row="1"
+               Grid.Column="1"
+               Grid.ColumnSpan="1"
+               Click="On_Button_Previous_Click">
             <Button.Background>
                 <ImageBrush ImageSource="Assets/button_left.png" Stretch="Uniform"/>
             </Button.Background>
         </Button>
 
         <Button
-                Click="On_Button_Play_Click"
-                Grid.Row="1" 
-                Grid.Column="2">
+               Click="On_Button_Play_Click"
+               Grid.Row="1"
+               Grid.Column="2">
             <Button.Background>
                 <ImageBrush ImageSource="Assets/button_play.png" Stretch="Uniform"/>
             </Button.Background>
         </Button>
 
-        <Button 
-                Grid.Row="1"
-                Grid.Column="3">
+        <Button
+               Grid.Row="1"
+               Grid.Column="3"
+               Click="On_Button_Stop_Click">
             <Button.Background>
                 <ImageBrush ImageSource="Assets/button_stop.png" Stretch="Uniform"/>
             </Button.Background>
         </Button>
 
-        <Button Grid.Row="1" 
-                Grid.Column="4">
+        <Button Grid.Row="1"
+               Grid.Column="4"
+               Click="On_Button_Next_Click">
             <Button.Background>
                 <ImageBrush ImageSource="Assets/button_right.png" Stretch="Uniform"/>
             </Button.Background>
@@ -125,6 +129,7 @@
         Grid.ColumnSpan="6"/>
 
         <ListBox ItemsSource="{Binding Songs}"
+                 Name="listBoxSongs"
                  Grid.Row="4"
                  Grid.Column="0"
                  Grid.ColumnSpan="6"

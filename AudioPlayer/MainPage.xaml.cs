@@ -29,6 +29,8 @@ namespace AudioPlayer
     {
         private PlaylistVM myPlaylist = new PlaylistVM();
         private Song currentSong = new Song();
+        private DispatcherTimer _timer;
+        private bool _sliderpressed = false;
 
         public MainPage()
         {
@@ -86,9 +88,15 @@ namespace AudioPlayer
         {
             if (currentSong.Path != null)
             {
-                mediaElement.Source = new Uri(currentSong.Path, UriKind.RelativeOrAbsolute);
-                mediaElement.Play();
-                this.mediaElementTextBlock.Text = currentSong.Title.Substring(0, currentSong.Title.Length - 4);
+                Play_Media_Element();
+                //mediaElement.Source = new Uri(currentSong.Path, UriKind.RelativeOrAbsolute);
+                SetupTimer();
+                TimeSpan recordingTime = mediaElement.NaturalDuration.TimeSpan;
+                AudioPlayerSeek.Maximum = recordingTime.TotalSeconds;
+                AudioPlayerSeek.SmallChange = 1;
+                AudioPlayerSeek.LargeChange = Math.Min(10, recordingTime.Seconds / 10);
+                //mediaElement.Play();
+                //this.mediaElementTextBlock.Text = currentSong.Title.Substring(0, currentSong.Title.Length - 4);
             }
         }
 
@@ -100,5 +108,113 @@ namespace AudioPlayer
                 currentSong = myObject;
             }
         }
+
+        private void AudioPlayerSeek_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
+        {
+            if (!_sliderpressed)
+            {
+                mediaElement.Position = TimeSpan.FromSeconds(e.NewValue);
+            }
+        }
+
+        private void SetupTimer()
+        {
+            _timer = new DispatcherTimer();
+            _timer.Interval = TimeSpan.FromSeconds(AudioPlayerSeek.StepFrequency);
+            StartTimer();
+        }
+
+        private void StartTimer()
+        {
+            _timer.Tick += _timer_Tick;
+            _timer.Start();
+        }
+
+        private void _timer_Tick(object sender, object e)
+        {
+            if (!_sliderpressed)
+            {
+                AudioPlayerSeek.Value = mediaElement.Position.TotalSeconds;
+            }
+        }
+
+        private void On_Button_Previous_Click(object sender, RoutedEventArgs e)
+        {
+            if (currentSong.Path != null)
+            {
+                int currentSongIndex = myPlaylist.Songs.IndexOf(currentSong);
+                if (currentSongIndex > 0)
+                {
+                    currentSong = myPlaylist.Songs.ElementAt(currentSongIndex - 1);
+                }
+                else
+                {
+                    currentSong = myPlaylist.Songs.ElementAt(myPlaylist.Songs.Count - 1);
+                }
+                Play_Media_Element();
+                listBoxSongs.SelectedItem = currentSong;
+            }
+        }
+
+        private void On_Button_Next_Click(object sender, RoutedEventArgs e)
+        {
+            if (currentSong.Path != null)
+            {
+                int currentSongIndex = myPlaylist.Songs.IndexOf(currentSong);
+                if (currentSongIndex < myPlaylist.Songs.Count - 1)
+                {
+                    currentSong = myPlaylist.Songs.ElementAt(currentSongIndex + 1);
+                }
+                else
+                {
+                    currentSong = myPlaylist.Songs.ElementAt(0);
+                }
+                Play_Media_Element();
+                listBoxSongs.SelectedItem = currentSong;
+            }
+        }
+
+        private void On_Button_Stop_Click(object sender, RoutedEventArgs e)
+        {
+            mediaElement.Stop();
+        }
+
+        private void Play_Media_Element()
+        {
+            mediaElement.Source = new Uri(currentSong.Path, UriKind.RelativeOrAbsolute);
+            mediaElement.Play();
+            this.mediaElementTextBlock.Text = currentSong.Title.Substring(0, currentSong.Title.Length - 4);
+        }
+
+        //private double SliderFrequency(TimeSpan timevalue)
+        //{
+        //    double stepfrequency = -1;
+
+        //    double absvalue = (int)Math.Round(timevalue.TotalSeconds, MidpointRounding.AwayFromZero);
+
+        //    stepfrequency = (int)(Math.Round(absvalue / 100));
+
+        //    if (timevalue.TotalMinutes >= 10 && timevalue.TotalMinutes < 30)
+        //    {
+        //        stepfrequency = 10;
+        //    }
+        //    else if (timevalue.TotalMinutes >= 30 && timevalue.TotalMinutes < 60)
+        //    {
+        //        stepfrequency = 30;
+        //    }
+        //    else if (timevalue.TotalHours >= 1)
+        //    {
+        //        stepfrequency = 60;
+        //    }
+
+        //    if (stepfrequency == 0) stepfrequency += 1;
+
+        //    if (stepfrequency == 1)
+        //    {
+        //        stepfrequency = absvalue / 100;
+        //    }
+
+        //    return stepfrequency;
+        //}
     }
 }
