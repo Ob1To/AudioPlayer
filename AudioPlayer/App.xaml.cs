@@ -113,7 +113,6 @@ namespace AudioPlayer
             var root = Window.Current.Content as Frame;
             var mainPage = root.Content as MainPage;
 
-
             var arguments = args as FileOpenPickerContinuationEventArgs;
             if (mainPage != null)
             {

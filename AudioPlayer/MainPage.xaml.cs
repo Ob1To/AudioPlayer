@@ -55,27 +55,23 @@ namespace AudioPlayer
 
         private void On_Button_Add_Click(object sender, RoutedEventArgs e)
         {
-
             var openPicker = new FileOpenPicker();
             openPicker.ViewMode = PickerViewMode.List;
-            openPicker.SuggestedStartLocation = PickerLocationId.HomeGroup;
+            //openPicker.SuggestedStartLocation = PickerLocationId.HomeGroup;
             openPicker.FileTypeFilter.Add(".mp3");
             openPicker.PickMultipleFilesAndContinue();
         }
 
         private void DisplayFiles(StorageFile[] files)
         {
-            
             if (files != null)
             {
                 List<Song> newList = new List<Song>();
-
                 foreach (var item in files)
                 {
                     Song newSong = new Song(item.Name, item.Path);
                     newList.Add(newSong);
                 }
-
                 myPlaylist.Songs = newList;
             }
         }
@@ -88,11 +84,9 @@ namespace AudioPlayer
 
         private void On_Button_Play_Click(object sender, RoutedEventArgs e)
         {
-           // mediaElement.AutoPlay = true;
             mediaElement.Source = new Uri(currentSong.Path, UriKind.RelativeOrAbsolute);
             mediaElement.Play();
-
-            this.mediaElementTextBlock.Text = currentSong.Title.Substring(0,currentSong.Title.Length - 4);
+            this.mediaElementTextBlock.Text = currentSong.Title.Substring(0, currentSong.Title.Length - 4);
         }
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
