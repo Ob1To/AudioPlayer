@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace AudioPlayer.ViewModels
 {
-    public class Song
+    public class Song : BaseVM
     {
         private string title;
         private string path;
+        private TimeSpan duration;
 
         public string Title
         {
@@ -36,6 +37,22 @@ namespace AudioPlayer.ViewModels
                 if (value != null)
                 {
                     this.path = value;
+                }
+            }
+        }
+
+        public TimeSpan Duration
+        {
+            get
+            {
+                return this.duration;
+            }
+            set
+            {
+                if (value != null)
+                {
+                    this.duration = value;
+                    OnPropertyChanged("Duration");
                 }
             }
         }

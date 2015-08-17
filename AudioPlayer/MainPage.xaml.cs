@@ -1,6 +1,7 @@
 ﻿using AudioPlayer.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -68,108 +69,108 @@ namespace AudioPlayer
             openPicker.PickMultipleFilesAndContinue();
         }
 
-        private void On_Button_Play_Click(object sender, RoutedEventArgs e)
-        {
-            if (currentSong.Path != null)
-            {
-                Play_Media_Element();
+        //private void On_Button_Play_Click(object sender, RoutedEventArgs e)
+        //{
+        //    if (currentSong.Path != null)
+        //    {
+        //        Play_Media_Element();
 
-                SetupTimer();
-                TimeSpan recordingTime = mediaElement.NaturalDuration.TimeSpan;
-                AudioPlayerSeek.Maximum = recordingTime.TotalSeconds;
-                AudioPlayerSeek.SmallChange = 1;
-                AudioPlayerSeek.LargeChange = Math.Min(10, recordingTime.Seconds / 10);
+        //        SetupTimer();
+        //        TimeSpan recordingTime = mediaElement.NaturalDuration.TimeSpan;
+        //        AudioPlayerSeek.Maximum = recordingTime.TotalSeconds;
+        //        AudioPlayerSeek.SmallChange = 1;
+        //        AudioPlayerSeek.LargeChange = Math.Min(10, recordingTime.Seconds / 10);
 
-            }
-        }
+        //    }
+        //}
 
-        private void On_Button_Stop_Click(object sender, RoutedEventArgs e)
-        {
-            this.mediaElement.Stop();
-        }
+        //private void On_Button_Stop_Click(object sender, RoutedEventArgs e)
+        //{
+        //    this.mediaElement.Stop();
+        //}
 
-        private void On_Button_Previous_Click(object sender, RoutedEventArgs e)
-        {
-            if (currentSong.Path != null)
-            {
-                int currentSongIndex = myPlaylist.Songs.IndexOf(currentSong);
-                if (currentSongIndex > 0)
-                {
-                    currentSong = myPlaylist.Songs.ElementAt(currentSongIndex - 1);
-                }
-                else
-                {
-                    currentSong = myPlaylist.Songs.ElementAt(myPlaylist.Songs.Count - 1);
-                }
-                Play_Media_Element();
-                listBoxSongs.SelectedItem = currentSong;
-            }
-        }
+        //private void On_Button_Previous_Click(object sender, RoutedEventArgs e)
+        //{
+        //    if (currentSong.Path != null)
+        //    {
+        //        int currentSongIndex = myPlaylist.Songs.IndexOf(currentSong);
+        //        if (currentSongIndex > 0)
+        //        {
+        //            currentSong = myPlaylist.Songs.ElementAt(currentSongIndex - 1);
+        //        }
+        //        else
+        //        {
+        //            currentSong = myPlaylist.Songs.ElementAt(myPlaylist.Songs.Count - 1);
+        //        }
+        //        Play_Media_Element();
+        //        listBoxSongs.SelectedItem = currentSong;
+        //    }
+        //}
 
-        private void On_Button_Next_Click(object sender, RoutedEventArgs e)
-        {
-            if (currentSong.Path != null)
-            {
-                int currentSongIndex = myPlaylist.Songs.IndexOf(currentSong);
-                if (currentSongIndex < myPlaylist.Songs.Count - 1)
-                {
-                    currentSong = myPlaylist.Songs.ElementAt(currentSongIndex + 1);
-                }
-                else
-                {
-                    currentSong = myPlaylist.Songs.ElementAt(0);
-                }
-                Play_Media_Element();
-                listBoxSongs.SelectedItem = currentSong;
-            }
-        }
+        //private void On_Button_Next_Click(object sender, RoutedEventArgs e)
+        //{
+        //    if (currentSong.Path != null)
+        //    {
+        //        int currentSongIndex = myPlaylist.Songs.IndexOf(currentSong);
+        //        if (currentSongIndex < myPlaylist.Songs.Count - 1)
+        //        {
+        //            currentSong = myPlaylist.Songs.ElementAt(currentSongIndex + 1);
+        //        }
+        //        else
+        //        {
+        //            currentSong = myPlaylist.Songs.ElementAt(0);
+        //        }
+        //        Play_Media_Element();
+        //        listBoxSongs.SelectedItem = currentSong;
+        //    }
+        //}
 
-        private void On_Button_Delete_Click(object sender, RoutedEventArgs e)
-        {
-            Button button = (Button)sender ;
-            Song dataObject = (Song)button.DataContext ;
-            //int index = .IndexOf(dataObject);
-            myPlaylist.deleteSong(dataObject);
-        }
+        //private void On_Button_Delete_Click(object sender, RoutedEventArgs e)
+        //{
+        //    Song currentItem = ((Button)sender).DataContext as Song;
+        //    myPlaylist.DeleteSong(currentItem);
 
-        /// <summary>
-        /// OnChanged Metheds
-        /// </summary>
-        /// <param name="files"></param>
+        //    //listBoxSongs.ItemsSource = myPlaylist.Songs;
+        //}
 
-        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            Song myObject = (sender as ListBox).SelectedItem as Song;
-            if (myObject != null)
-            {
-                currentSong = myObject;
-            }
-        }
+        ///// <summary>
+        ///// OnChanged Metheds
+        ///// </summary>
+        ///// <param name="files"></param>
 
-        private void AudioPlayerSeek_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
-        {
-            if (!isSliderPressed)
-            {
-                mediaElement.Position = TimeSpan.FromSeconds(e.NewValue);
-            }
-        }
+        //private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    Song myObject = (sender as ListBox).SelectedItem as Song;
+        //    if (myObject != null)
+        //    {
+        //        currentSong = myObject;
+        //    }
+        //}
 
-        private void Grid_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
-        {
-            SliderSetter();
-            Play_Media_Element();
-        }
+        //private void AudioPlayerSeek_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
+        //{
+        //    if (!isSliderPressed)
+        //    {
+        //        mediaElement.Position = TimeSpan.FromSeconds(e.NewValue);
+        //    }
+        //}
 
-        /// <summary>
-        /// Helpers
-        /// </summary>
-        /// <param name="files"></param>
+        //private void Grid_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
+        //{
+        //    SliderSetter();
+        //    Play_Media_Element();
+        //}
+
+        ///// <summary>
+        ///// Helpers
+        ///// </summary>
+        ///// <param name="files"></param>
 
         private void DisplayFiles(StorageFile[] files)
         {
             if (files != null)
             {
-                List<Song> newList = new List<Song>();
+                ObservableCollection<Song> newList = new ObservableCollection<Song>();
                 foreach (var item in files)
                 {
                     Song newSong = new Song(item.Name, item.Path);
@@ -193,45 +194,45 @@ namespace AudioPlayer
             DisplayFiles(files.ToArray());
         }
 
-        private void Play_Media_Element()
-        {
+        //private void Play_Media_Element()
+        //{
 
-            this.mediaElementTextBlock.Text = currentSong.Title.Substring(0, currentSong.Title.Length - 4);
-            this.mediaElement.Source = new Uri(currentSong.Path, UriKind.RelativeOrAbsolute);
-            this.mediaElement.Play();
-        }
+        //    this.mediaElementTextBlock.Text = currentSong.Title.Substring(0, currentSong.Title.Length - 4);
+        //    this.mediaElement.Source = new Uri(currentSong.Path, UriKind.RelativeOrAbsolute);
+        //    this.mediaElement.Play();
+        //}
 
-        private void SliderSetter()
-        {
-            SetupTimer();
-            TimeSpan recordingTime = mediaElement.NaturalDuration.TimeSpan;
-            AudioPlayerSeek.Maximum = recordingTime.TotalSeconds;
-            AudioPlayerSeek.SmallChange = 1;
-            AudioPlayerSeek.LargeChange = Math.Min(10, recordingTime.Seconds / 10);
-        }
+        //private void SliderSetter()
+        //{
+        //    SetupTimer();
+        //    TimeSpan recordingTime = mediaElement.NaturalDuration.TimeSpan;
+        //    AudioPlayerSeek.Maximum = recordingTime.TotalSeconds;
+        //    AudioPlayerSeek.SmallChange = 1;
+        //    AudioPlayerSeek.LargeChange = Math.Min(10, recordingTime.Seconds / 10);
+        //}
 
-        private void SetupTimer()
-        {
-            timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromSeconds(AudioPlayerSeek.StepFrequency);
-            StartTimer();
-        }
+        //private void SetupTimer()
+        //{
+        //    timer = new DispatcherTimer();
+        //    timer.Interval = TimeSpan.FromSeconds(AudioPlayerSeek.StepFrequency);
+        //    StartTimer();
+        //}
 
-        private void StartTimer()
-        {
-            timer.Tick += Timer_Tick;
-            timer.Start();
-        }
+        //private void StartTimer()
+        //{
+        //    timer.Tick += Timer_Tick;
+        //    timer.Start();
+        //}
 
-        private void Timer_Tick(object sender, object e)
-        {
-            if (!isSliderPressed)
-            {
-                AudioPlayerSeek.Value = mediaElement.Position.TotalSeconds;
-            }
-        }
+        //private void Timer_Tick(object sender, object e)
+        //{
+        //    if (!isSliderPressed)
+        //    {
+        //        AudioPlayerSeek.Value = mediaElement.Position.TotalSeconds;
+        //    }
+        //}
 
-        
+
 
         //private double SliderFrequency(TimeSpan timevalue)
         //{

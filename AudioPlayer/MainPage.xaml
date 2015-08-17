@@ -41,12 +41,13 @@
         </Grid.ColumnDefinitions>
 
         <MediaElement 
-            Name="mediaElement"
+            Source="{Binding CurrentSong.Path}"
             Grid.Row="0"
             Grid.Column="1"
             AutoPlay="True"/>
 
         <TextBlock
+            Text="{Binding SongNameTextBlock}"
             Name="mediaElementTextBlock"
             Grid.Row="0"
             Grid.Column="1"
@@ -133,7 +134,7 @@
                  Grid.Row="4"
                  Grid.Column="0"
                  Grid.ColumnSpan="6"
-                 SelectionChanged="ListBox_SelectionChanged"
+                 SelectionChanged="{Binding }"
                  HorizontalContentAlignment="Stretch">
             <ListBox.ItemTemplate>
                 <DataTemplate>
@@ -162,7 +163,6 @@
             </ListBox.ItemTemplate>
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
-                    
                     <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                 </Style>
             </ListBox.ItemContainerStyle>
