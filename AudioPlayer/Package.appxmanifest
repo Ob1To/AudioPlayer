@@ -37,13 +37,6 @@
             </SupportedFileTypes>
           </FileTypeAssociation>
         </Extension>
-        <Extension Category="windows.fileTypeAssociation">
-          <FileTypeAssociation Name="textFiles">
-            <SupportedFileTypes>
-              <FileType>.txt</FileType>
-            </SupportedFileTypes>
-          </FileTypeAssociation>
-        </Extension>
       </Extensions>
     </Application>
   </Applications>
