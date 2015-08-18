@@ -73,6 +73,19 @@ namespace AudioPlayer.ViewModels
             //}
         }
 
+        private ListBox myListBox;
+        public ListBox MyListBox
+        {
+            get
+            {
+                if (this.myListBox == null)
+                {
+                    this.myListBox = MainPage.currentMainPage.FindName("listBoxOfSongs") as ListBox;
+                }
+                return this.myListBox;
+            }
+        }
+
         private ObservableCollection<Song> songs;
         public ObservableCollection<Song> Songs
         {
@@ -108,24 +121,41 @@ namespace AudioPlayer.ViewModels
         }
 
         private ICommand stopCommand;
-
         public ICommand Stop
         {
             get
             {
                 if (this.stopCommand == null)
                 {
-                    this.stopCommand = new DelegateCommand(this.StopPlay);
+                    this.stopCommand = new DelegateCommand(this.PerformStop);
                 }
                 return this.stopCommand;
             }
         }
 
-        private void StopPlay()
+        private ICommand goLeftCommand;
+        public ICommand GoLeft
         {
-            if (currentSong.Path != null)
+            get
             {
-                this.MyMediaElement.Stop();
+                if (this.goLeftCommand ==  null)
+                {
+                    this.goLeftCommand = new DelegateCommand(this.PerformGoLeft);
+                }
+                return this.goLeftCommand;
+            }
+        }
+
+        private ICommand goRightCommand;
+        public ICommand GoRight
+        {
+            get
+            {
+                if (this.goRightCommand == null)
+                {
+                    this.goRightCommand = new DelegateCommand(this.PerformGoRight);
+                }
+                return this.goRightCommand;
             }
         }
 
@@ -137,6 +167,49 @@ namespace AudioPlayer.ViewModels
                 {
                     Play_Media_Element();
                 }
+            }
+        }
+        private void PerformStop()
+        {
+            if (currentSong.Path != null)
+            {
+                this.MyMediaElement.Stop();
+            }
+        }
+
+        private void PerformGoLeft()
+        {
+            if (currentSong.Path != null)
+            {
+                int currentSongIndex = this.Songs.IndexOf(currentSong);
+                if (currentSongIndex > 0)
+                {
+                    currentSong = this.Songs.ElementAt(currentSongIndex - 1);
+                }
+                else
+                {
+                    currentSong = this.Songs.ElementAt(this.Songs.Count - 1);
+                }
+                Play_Media_Element();
+                this.MyListBox.SelectedItem = currentSong;
+            }
+        }
+
+        private void PerformGoRight()
+        {
+            if (currentSong.Path != null)
+            {
+                int currentSongIndex = this.Songs.IndexOf(currentSong);
+                if (currentSongIndex < this.Songs.Count - 1)
+                {
+                    currentSong = this.Songs.ElementAt(currentSongIndex + 1);
+                }
+                else
+                {
+                    currentSong = this.Songs.ElementAt(0);
+                }
+                Play_Media_Element();
+                this.MyListBox.SelectedItem = currentSong;
             }
         }
 

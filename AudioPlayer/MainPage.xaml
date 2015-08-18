@@ -92,7 +92,8 @@
         <Button 
                Grid.Row="1"
                Grid.Column="1"
-               Grid.ColumnSpan="1">
+               Grid.ColumnSpan="1"
+                Command="{Binding GoLeft}">
             <Button.Background>
                 <ImageBrush ImageSource="Assets/button_left.png" Stretch="Uniform"/>
             </Button.Background>
@@ -117,7 +118,8 @@
         </Button>
 
         <Button Grid.Row="1"
-               Grid.Column="4">
+                Grid.Column="4"
+                Command="{Binding GoRight}">
             <Button.Background>
                 <ImageBrush ImageSource="Assets/button_right.png" Stretch="Uniform"/>
             </Button.Background>
@@ -131,7 +133,9 @@
         BorderThickness="0,3,0,0"
         Grid.ColumnSpan="6"/>
 
-        <ListBox ItemsSource="{Binding Songs,UpdateSourceTrigger=PropertyChanged}"
+        <ListBox 
+                 Name="listBoxOfSongs"
+                 ItemsSource="{Binding Songs,UpdateSourceTrigger=PropertyChanged}"
                  Grid.Row="4"
                  Grid.Column="0"
                  Grid.ColumnSpan="6"
