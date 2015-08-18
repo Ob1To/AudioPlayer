@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace AudioPlayer.ViewModels
@@ -44,6 +45,8 @@ namespace AudioPlayer.ViewModels
                 }
             }
         }
+
+        private DispatcherTimer timer;
 
         private MediaElement myMediaElement;
         public MediaElement MyMediaElement
@@ -96,10 +99,14 @@ namespace AudioPlayer.ViewModels
                 return this.playCommand;
             }
         }
-
+        
         private void PerformPlay()
         {
-            
+            if (currentSong.Path != null)
+            {
+                Play_Media_Element();
+
+            }
         }
 
         private void Play_Media_Element()

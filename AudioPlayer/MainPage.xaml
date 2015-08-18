@@ -48,7 +48,6 @@
 
         <TextBlock
             Text="{Binding SongNameTextBlock}"
-            Name="mediaElementTextBlock"
             Grid.Row="0"
             Grid.Column="1"
             Grid.ColumnSpan="4"
@@ -67,7 +66,7 @@
             FontSize="15"
             Foreground="Black"/>
 
-        <Slider
+        <!--<Slider
             Name="AudioPlayerSeek"
             ValueChanged="AudioPlayerSeek_ValueChanged"
             Grid.Row="2"
@@ -78,7 +77,10 @@
             Grid.ColumnSpan="6"
             Foreground="Bisque"
             Background="White"
-            BorderThickness="0" HorizontalAlignment="Left" Grid.RowSpan="2" Width="339"/>
+            BorderThickness="0" 
+            HorizontalAlignment="Left" 
+            Grid.RowSpan="2" 
+            Width="339"/>-->
 
         <Image
             Grid.Row="0"
@@ -86,19 +88,19 @@
             Grid.RowSpan="3"
             Source="/Assets/cloud-icon.png"/>
 
-        <Button Grid.Row="1"
+        <Button 
+               Grid.Row="1"
                Grid.Column="1"
-               Grid.ColumnSpan="1"
-               Click="On_Button_Previous_Click">
+               Grid.ColumnSpan="1">
             <Button.Background>
                 <ImageBrush ImageSource="Assets/button_left.png" Stretch="Uniform"/>
             </Button.Background>
         </Button>
 
         <Button
-               Click="On_Button_Play_Click"
                Grid.Row="1"
-               Grid.Column="2">
+               Grid.Column="2"
+               Command="{Binding Play}">
             <Button.Background>
                 <ImageBrush ImageSource="Assets/button_play.png" Stretch="Uniform"/>
             </Button.Background>
@@ -106,16 +108,14 @@
 
         <Button
                Grid.Row="1"
-               Grid.Column="3"
-               Click="On_Button_Stop_Click">
+               Grid.Column="3">
             <Button.Background>
                 <ImageBrush ImageSource="Assets/button_stop.png" Stretch="Uniform"/>
             </Button.Background>
         </Button>
 
         <Button Grid.Row="1"
-               Grid.Column="4"
-               Click="On_Button_Next_Click">
+               Grid.Column="4">
             <Button.Background>
                 <ImageBrush ImageSource="Assets/button_right.png" Stretch="Uniform"/>
             </Button.Background>
@@ -130,27 +130,23 @@
         Grid.ColumnSpan="6"/>
 
         <ListBox ItemsSource="{Binding Songs}"
-                 Name="listBoxSongs"
                  Grid.Row="4"
                  Grid.Column="0"
                  Grid.ColumnSpan="6"
-                 SelectionChanged="{Binding }"
+                 SelectedItem="{Binding CurrentSong}"
                  HorizontalContentAlignment="Stretch">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Grid Height="40"
-                          DoubleTapped="Grid_DoubleTapped">
+                    <Grid Height="40">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="5*"/>
                             <ColumnDefinition Width="1*"/>
                         </Grid.ColumnDefinitions>
-
                         <TextBlock
                             Grid.Column="0"
                             FontSize="25"
                             Text="{Binding Title}"/>
-                        <Button Grid.Column="1"
-                                Click="On_Button_Delete_Click">
+                        <Button Grid.Column="1">
                             <Button.Background>
                                 <ImageBrush 
                                 Stretch="Uniform" 
