@@ -107,6 +107,28 @@ namespace AudioPlayer.ViewModels
             }
         }
 
+        private ICommand stopCommand;
+
+        public ICommand Stop
+        {
+            get
+            {
+                if (this.stopCommand == null)
+                {
+                    this.stopCommand = new DelegateCommand(this.StopPlay);
+                }
+                return this.stopCommand;
+            }
+        }
+
+        private void StopPlay()
+        {
+            if (currentSong.Path != null)
+            {
+                this.MyMediaElement.Stop();
+            }
+        }
+
         private void PerformPlay()
         {
             if (this.CurrentSong != null)

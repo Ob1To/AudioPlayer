@@ -55,7 +55,7 @@
             VerticalAlignment="Center"
             HorizontalAlignment="Center"
             FontSize="20"/>
-        
+
         <TextBlock
             Grid.Row="2"
             Grid.Column="0"
@@ -109,7 +109,8 @@
 
         <Button
                Grid.Row="1"
-               Grid.Column="3">
+               Grid.Column="3"
+               Command="{Binding Stop}">
             <Button.Background>
                 <ImageBrush ImageSource="Assets/button_stop.png" Stretch="Uniform"/>
             </Button.Background>
