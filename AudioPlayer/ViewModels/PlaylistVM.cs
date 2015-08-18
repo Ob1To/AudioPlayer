@@ -142,7 +142,7 @@ namespace AudioPlayer.ViewModels
 
         private void Play_Media_Element()
         {
-            ListBox_SelectionChanged();
+           
             this.SongNameTextBlock = this.CurrentSong.Title.Substring(0, currentSong.Title.Length - 4);
 
             //this.MyMediaElement = MainPage.currentMainPage.FindName("mPlayer") as MediaElement;
