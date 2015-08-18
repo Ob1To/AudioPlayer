@@ -35,6 +35,10 @@ namespace AudioPlayer.ViewModels
         {
             get
             {
+                if (this.currentSong == null)
+                {
+                    this.currentSong = new Song();
+                }
                 return this.currentSong;
             }
             set
@@ -43,10 +47,9 @@ namespace AudioPlayer.ViewModels
                 {
                     this.currentSong = value;
                 }
+                OnPropertyChanged("CurrentSong");
             }
         }
-
-        private DispatcherTimer timer;
 
         private MediaElement myMediaElement;
         public MediaElement MyMediaElement
@@ -106,14 +109,18 @@ namespace AudioPlayer.ViewModels
 
         private void PerformPlay()
         {
-            if (currentSong.Path != null)
+            if (this.CurrentSong != null)
             {
-                Play_Media_Element();
+                if (currentSong.Path != null)
+                {
+                    Play_Media_Element();
+                }
             }
         }
 
         private void Play_Media_Element()
         {
+            ListBox_SelectionChanged();
             this.SongNameTextBlock = this.CurrentSong.Title.Substring(0, currentSong.Title.Length - 4);
 
             //this.MyMediaElement = MainPage.currentMainPage.FindName("mPlayer") as MediaElement;

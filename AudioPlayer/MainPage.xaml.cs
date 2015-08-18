@@ -231,6 +231,11 @@ namespace AudioPlayer
 
         }
 
+        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
         //private void Play_Media_Element()
         //{
 

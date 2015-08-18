@@ -130,7 +130,7 @@
         BorderThickness="0,3,0,0"
         Grid.ColumnSpan="6"/>
 
-        <ListBox ItemsSource="{Binding Songs}"
+        <ListBox ItemsSource="{Binding Songs,UpdateSourceTrigger=PropertyChanged}"
                  Grid.Row="4"
                  Grid.Column="0"
                  Grid.ColumnSpan="6"
