@@ -38,7 +38,7 @@
           </FileTypeAssociation>
         </Extension>
         <Extension Category="windows.fileTypeAssociation">
-          <FileTypeAssociation Name="textFiles">
+          <FileTypeAssociation Name="textfile">
             <SupportedFileTypes>
               <FileType>.txt</FileType>
             </SupportedFileTypes>

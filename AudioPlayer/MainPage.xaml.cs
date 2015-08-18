@@ -194,6 +194,41 @@ namespace AudioPlayer
             DisplayFiles(files.ToArray());
         }
 
+        private void On_Button_Next_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void On_Button_Delete_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Grid_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
+        {
+
+        }
+
+        private void AudioPlayerSeek_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
+        {
+
+        }
+
+        private void On_Button_Stop_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void On_Button_Previous_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void On_Button_Play_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         //private void Play_Media_Element()
         //{
 

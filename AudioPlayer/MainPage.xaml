@@ -134,7 +134,6 @@
                  Grid.Row="4"
                  Grid.Column="0"
                  Grid.ColumnSpan="6"
-                 SelectionChanged="{Binding }"
                  HorizontalContentAlignment="Stretch">
             <ListBox.ItemTemplate>
                 <DataTemplate>
