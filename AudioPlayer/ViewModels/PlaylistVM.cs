@@ -54,16 +54,20 @@ namespace AudioPlayer.ViewModels
         {
             get
             {
+                if (myMediaElement == null)
+                {
+                    myMediaElement = MainPage.currentMainPage.FindName("mPlayer") as MediaElement;
+                }
                 return this.myMediaElement;
             }
-            set
-            {
-                if (this.myMediaElement != value)
-                {
-                    this.myMediaElement = value;
-                    OnPropertyChanged("MyMediaElement");
-                }
-            }
+            //set
+            //{
+            //    if (this.myMediaElement != value)
+            //    {
+            //        this.myMediaElement = value;
+            //        OnPropertyChanged("MyMediaElement");
+            //    }
+            //}
         }
 
         private ObservableCollection<Song> songs;
@@ -99,19 +103,22 @@ namespace AudioPlayer.ViewModels
                 return this.playCommand;
             }
         }
-        
+
         private void PerformPlay()
         {
             if (currentSong.Path != null)
             {
                 Play_Media_Element();
-
             }
         }
 
         private void Play_Media_Element()
         {
             this.SongNameTextBlock = this.CurrentSong.Title.Substring(0, currentSong.Title.Length - 4);
+
+            //this.MyMediaElement = MainPage.currentMainPage.FindName("mPlayer") as MediaElement;
+            //MainPage.currentMainPage.mPlayer.Source = new Uri(this.CurrentSong.Path, UriKind.RelativeOrAbsolute);
+            //MainPage.currentMainPage.mPlayer.Play();
             this.MyMediaElement.Source = new Uri(this.CurrentSong.Path, UriKind.RelativeOrAbsolute);
             this.MyMediaElement.Play();
         }

@@ -32,12 +32,14 @@ namespace AudioPlayer
         private Song currentSong = new Song();
         private DispatcherTimer timer;
         private bool isSliderPressed = false;
+        public static MainPage currentMainPage;
 
         public MainPage()
         {
             this.InitializeComponent();
             this.DataContext = myPlaylist;
             this.NavigationCacheMode = NavigationCacheMode.Required;
+            currentMainPage = this;
         }
 
         /// <summary>

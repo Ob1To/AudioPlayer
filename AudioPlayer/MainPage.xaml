@@ -41,6 +41,7 @@
         </Grid.ColumnDefinitions>
 
         <MediaElement 
+            x:Name="mPlayer"
             Source="{Binding CurrentSong.Path}"
             Grid.Row="0"
             Grid.Column="1"
@@ -133,7 +134,7 @@
                  Grid.Row="4"
                  Grid.Column="0"
                  Grid.ColumnSpan="6"
-                 SelectedItem="{Binding CurrentSong}"
+                 SelectedItem="{Binding CurrentSong, Mode=TwoWay}"
                  HorizontalContentAlignment="Stretch">
             <ListBox.ItemTemplate>
                 <DataTemplate>
