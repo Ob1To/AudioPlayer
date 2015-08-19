@@ -28,7 +28,8 @@ namespace AudioPlayer
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        public PlaylistVM myPlaylist = new PlaylistVM();
+        private PlaylistVM myPlaylist = new PlaylistVM();
+        private Song currentSong = new Song();
         public static MainPage currentMainPage;
 
         public MainPage()

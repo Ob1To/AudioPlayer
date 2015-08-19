@@ -12,6 +12,7 @@ namespace AudioPlayer.ViewModels
         private string path;
         private TimeSpan duration;
 
+
         public string Title
         {
             get
@@ -26,6 +27,8 @@ namespace AudioPlayer.ViewModels
                 }
             }
         }
+
+
         public string Path
         {
             get
@@ -62,7 +65,7 @@ namespace AudioPlayer.ViewModels
 
         }
 
-        public Song(string title,string path)
+        public Song(string title, string path)
         {
             this.Title = title;
             this.Path = path;
