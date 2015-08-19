@@ -37,6 +37,13 @@
             </SupportedFileTypes>
           </FileTypeAssociation>
         </Extension>
+        <Extension Category="windows.fileTypeAssociation">
+          <FileTypeAssociation Name="video">
+            <SupportedFileTypes>
+              <FileType>.mp4</FileType>
+            </SupportedFileTypes>
+          </FileTypeAssociation>
+        </Extension>
       </Extensions>
     </Application>
   </Applications>
@@ -44,5 +51,6 @@
     <Capability Name="internetClientServer" />
     <Capability Name="musicLibrary" />
     <Capability Name="removableStorage" />
+    <Capability Name="videosLibrary" />
   </Capabilities>
 </Package>

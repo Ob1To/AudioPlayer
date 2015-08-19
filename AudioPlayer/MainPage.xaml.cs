@@ -35,6 +35,7 @@ namespace AudioPlayer
         public MainPage()
         {
             this.InitializeComponent();
+
             this.DataContext = myPlaylist;
             this.NavigationCacheMode = NavigationCacheMode.Required;
             currentMainPage = this;

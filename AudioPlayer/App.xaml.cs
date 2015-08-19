@@ -119,7 +119,6 @@ namespace AudioPlayer
 
             if (mainPage != null)
             {
-
                 PlaylistVM p = mainPage.DataContext as PlaylistVM;
                 p.PhonePickedFiles(arguments);
             }
