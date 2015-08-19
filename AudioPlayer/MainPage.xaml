@@ -1,4 +1,5 @@
 ﻿<Page
+    x:Name="mPage"
     x:Class="AudioPlayer.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -67,9 +68,8 @@
             FontSize="15"
             Foreground="Black"/>
 
-        <!--<Slider
+        <Slider
             Name="AudioPlayerSeek"
-            ValueChanged="AudioPlayerSeek_ValueChanged"
             Grid.Row="2"
             Grid.Column="0"
             Margin="50,0,10,0"
@@ -81,7 +81,7 @@
             BorderThickness="0" 
             HorizontalAlignment="Left" 
             Grid.RowSpan="2" 
-            Width="339"/>-->
+            Width="339"/>
 
         <Image
             Grid.Row="0"
@@ -135,7 +135,7 @@
 
         <ListBox 
                  Name="listBoxOfSongs"
-                 ItemsSource="{Binding Songs,UpdateSourceTrigger=PropertyChanged}"
+                 ItemsSource="{Binding Songs}"
                  Grid.Row="4"
                  Grid.Column="0"
                  Grid.ColumnSpan="6"
@@ -152,7 +152,10 @@
                             Grid.Column="0"
                             FontSize="25"
                             Text="{Binding Title}"/>
-                        <Button Grid.Column="1">
+                        <Button Grid.Column="1"
+                                CommandParameter="{Binding Title}"
+                                Command="{Binding DataContext.Delete, ElementName=mPage}"
+                                Name="buttonDelete">
                             <Button.Background>
                                 <ImageBrush 
                                 Stretch="Uniform" 
@@ -169,17 +172,10 @@
                 </Style>
             </ListBox.ItemContainerStyle>
         </ListBox>
-
-        <!--<MediaElement 
-            Grid.Row="4"
-            Grid.Column="5"
-            Name="myMediaElement" 
-                      AutoPlay="True" 
-                      />-->
-
+        
         <Button 
                 Name="AddButton"
-                Click="On_Button_Add_Click"
+                Command="{Binding Add}"
                 Grid.Row="5" 
                 Grid.Column="4">
             <Button.Background>

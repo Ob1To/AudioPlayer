@@ -6,13 +6,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Windows.ApplicationModel.Activation;
+using Windows.Storage;
+using Windows.Storage.Pickers;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Input;
 
 namespace AudioPlayer.ViewModels
 {
     public class PlaylistVM : BaseVM
     {
+        private DispatcherTimer timer;
+        private bool isSliderPressed = false;
+
         private string songNameTextBlock;
         public string SongNameTextBlock
         {
@@ -86,6 +94,19 @@ namespace AudioPlayer.ViewModels
             }
         }
 
+        private Slider mySlider;
+        public Slider MySlider
+        {
+            get
+            {
+                if (this.mySlider == null)
+                {
+                    this.mySlider = MainPage.currentMainPage.FindName("AudioPlayerSeek") as Slider;
+                }
+                return this.mySlider;
+            }
+        }
+
         private ObservableCollection<Song> songs;
         public ObservableCollection<Song> Songs
         {
@@ -102,8 +123,8 @@ namespace AudioPlayer.ViewModels
                 if (value != this.songs)
                 {
                     this.songs = value;
-                    OnPropertyChanged("Songs");
                 }
+                OnPropertyChanged("Songs");
             }
         }
 
@@ -159,8 +180,53 @@ namespace AudioPlayer.ViewModels
             }
         }
 
+        private ICommand addCommand;
+        public ICommand Add
+        {
+            get
+            {
+                if (this.addCommand == null)
+                {
+                    this.addCommand = new DelegateCommand(this.PerformAdd);
+                }
+                return this.addCommand;
+            }
+        }
+
+        private ICommand deleteCommand;
+        public ICommand Delete
+        {
+            get
+            {
+                if (this.deleteCommand == null)
+                {
+                    this.deleteCommand = new RelayCommand(this.DeleteSong);
+                }
+                return this.deleteCommand;
+            }
+        }
+
+        private void DeleteSong(object obj)
+        {
+            var title = obj as string;
+            foreach (var item in Songs)
+            {
+                if (item.Title.Equals(title))
+                {
+                    this.Songs.Remove(item);
+                    break;
+                }
+            }
+        }
+
+        private void PerformPlayAgain()
+        {
+            Play_Media_Element();
+        }
+
         private void PerformPlay()
         {
+            SliderSetter();
             if (this.CurrentSong != null)
             {
                 if (currentSong.Path != null)
@@ -213,6 +279,43 @@ namespace AudioPlayer.ViewModels
             }
         }
 
+        private void PerformAdd()
+        {
+            var openPicker = new FileOpenPicker();
+            openPicker.ViewMode = PickerViewMode.List;
+            openPicker.FileTypeFilter.Add(".mp3");
+            openPicker.PickMultipleFilesAndContinue();
+        }
+
+
+        private void DisplayFiles(StorageFile[] files)
+        {
+            if (files != null)
+            {
+                ObservableCollection<Song> newList = new ObservableCollection<Song>();
+                foreach (var item in files)
+                {
+                    Song newSong = new Song(item.Name, item.Path);
+                    newList.Add(newSong);
+                }
+
+                if (this.Songs != null)
+                {
+                    foreach (var item in this.Songs)
+                    {
+                        newList.Add(item);
+                    }
+                }
+                this.Songs = newList;
+            }
+        }
+
+        internal void PhonePickedFiles(FileOpenPickerContinuationEventArgs arguments)
+        {
+            var files = arguments.Files;
+            DisplayFiles(files.ToArray());
+        }
+
         private void Play_Media_Element()
         {
            
@@ -225,9 +328,42 @@ namespace AudioPlayer.ViewModels
             this.MyMediaElement.Play();
         }
 
-        public void DeleteSong(Song s)
+        private void AudioPlayerSeek_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
         {
-            this.songs.Remove(s);
+            if (!isSliderPressed)
+            {
+                this.MyMediaElement.Position = TimeSpan.FromSeconds(e.NewValue);
+            }
+        }
+
+        private void SliderSetter()
+        {
+            SetupTimer();
+            TimeSpan recordingTime = this.MyMediaElement.NaturalDuration.TimeSpan;
+            this.MySlider.Maximum = recordingTime.TotalSeconds;
+            this.MySlider.SmallChange = 1;
+            this.MySlider.LargeChange = Math.Min(10, recordingTime.Seconds / 10);
+        }
+
+        private void SetupTimer()
+        {
+            timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(this.MySlider.StepFrequency);
+            StartTimer();
+        }
+
+        private void StartTimer()
+        {
+            timer.Tick += Timer_Tick;
+            timer.Start();
+        }
+
+        private void Timer_Tick(object sender, object e)
+        {
+            if (!isSliderPressed)
+            {
+                this.MySlider.Value = this.MyMediaElement.Position.TotalSeconds;
+            }
         }
     }
 }

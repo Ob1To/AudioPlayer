@@ -15,6 +15,8 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
+using AudioPlayer.ViewModels;
+
 
 // The Blank Application template is documented at http://go.microsoft.com/fwlink/?LinkId=391641
 
@@ -105,7 +107,7 @@ namespace AudioPlayer
         }
 
 #if WINDOWS_PHONE_APP
-        
+
         protected override void OnActivated(IActivatedEventArgs args)
         {
             base.OnActivated(args);
@@ -114,12 +116,15 @@ namespace AudioPlayer
             var mainPage = root.Content as MainPage;
 
             var arguments = args as FileOpenPickerContinuationEventArgs;
+
             if (mainPage != null)
             {
-                mainPage.PhonePickedFiles(arguments);
+
+                PlaylistVM p = mainPage.DataContext as PlaylistVM;
+                p.PhonePickedFiles(arguments);
             }
-        }  
-                 
+        }
+
         /// <summary>
         /// Restores the content transitions after the app has launched.
         /// </summary>
