@@ -2,14 +2,18 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Newtonsoft.Json;
 using Windows.ApplicationModel.Activation;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.UI.Xaml;
+using System.Runtime.Serialization;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
@@ -72,14 +76,6 @@ namespace AudioPlayer.ViewModels
                 }
                 return this.myMediaElement;
             }
-            //set
-            //{
-            //    if (this.myMediaElement != value)
-            //    {
-            //        this.myMediaElement = value;
-            //        OnPropertyChanged("MyMediaElement");
-            //    }
-            //}
         }
 
         private ListBox myListBox;
@@ -115,6 +111,47 @@ namespace AudioPlayer.ViewModels
                 OnPropertyChanged("Songs");
             }
         }
+
+        private ObservableCollection<Playlist> listOfPlaylists;
+        public ObservableCollection<Playlist> ListOfPlayLists
+        {
+            get
+            {
+                if (this.listOfPlaylists == null)
+                {
+                    this.listOfPlaylists = new ObservableCollection<Playlist>();
+                }
+                return this.listOfPlaylists;
+            }
+        }
+
+        private Playlist currentPlaylist;
+        public Playlist CurrentPlaylist
+        {
+            get
+            {
+                if (this.currentPlaylist == null)
+                {
+                    this.currentPlaylist = new Playlist();
+                }
+                return this.currentPlaylist;
+            }
+            set
+            {
+                if (this.currentPlaylist != value)
+                {
+                    this.currentPlaylist = value;
+                }
+            }
+        }
+
+        private Popup savePopUp;
+
+        private PopUpWindowSave popUpWindowSave;
+
+        private Popup loadPopUp;
+
+        private PopUpWindowLoad popUpWindowLoad;
 
         private ICommand playCommand;
         public ICommand Play
@@ -188,30 +225,96 @@ namespace AudioPlayer.ViewModels
             {
                 if (this.deleteCommand == null)
                 {
-                    this.deleteCommand = new RelayCommand(this.DeleteSong);
+                              this.deleteCommand = new RelayCommand(this.PerformDelete);
                 }
                 return this.deleteCommand;
             }
         }
 
-        private void DeleteSong(object obj)
+        private ICommand saveCommand;
+        public ICommand Save
         {
-            var title = obj as string;
-            foreach (var item in Songs)
+            get
             {
-                if (item.Title.Equals(title))
+                if (this.saveCommand == null)
                 {
-                    this.Songs.Remove(item);
-                    break;
+                    this.saveCommand = new DelegateCommand(this.PerformSave);
                 }
+                return this.saveCommand;
             }
         }
 
-        private void PerformPlayAgain()
+        private ICommand savePlaylistCommand;
+        public ICommand SavePlaylist
         {
-            Play_Media_Element();
+            get
+            {
+                if (this.savePlaylistCommand == null)
+                {
+                    this.savePlaylistCommand = new RelayCommand(this.PerformSavePlaylist);
+                }
+                return this.savePlaylistCommand;
+            }
         }
 
+        private ICommand cancelSavingCommand;
+        public ICommand CancelSaving
+        {
+            get
+            {
+                if (this.cancelSavingCommand == null)
+                {
+                    this.cancelSavingCommand = new DelegateCommand(this.PerformCancelSaving);
+                }
+                return this.cancelSavingCommand;
+            }
+        }
+
+        private ICommand loadCommand;
+        public ICommand Load
+        {
+            get
+            {
+                if (this.loadCommand == null)
+                {
+                    this.loadCommand = new DelegateCommand(this.PerformLoad);
+                }
+                return this.loadCommand;
+            }
+        }
+
+        private ICommand loadPlaylistCommand;
+
+        public ICommand LoadPlaylist
+        {
+            get
+            {
+                if (this.loadPlaylistCommand == null)
+                {
+                    this.loadPlaylistCommand = new DelegateCommand(this.PerformLoadPlaylist);
+                }
+                return this.loadPlaylistCommand;
+            }
+        }
+
+        private ICommand cancelLoadingCommand;
+
+        public ICommand CancelLoading
+        {
+            get
+            {
+                if (this.cancelLoadingCommand == null)
+                {
+                    this.cancelLoadingCommand = new DelegateCommand(this.PerformCancelLoading);
+                }
+                return this.cancelLoadingCommand;
+            }
+        }
+
+
+        /// <summary>
+        /// Commands
+        /// </summary>
         private void PerformPlay()
         {
             if (this.CurrentSong != null)
@@ -274,7 +377,93 @@ namespace AudioPlayer.ViewModels
             openPicker.PickMultipleFilesAndContinue();
         }
 
+        private void PerformDelete(object obj)
+        {
+            var title = obj as string;
+            foreach (var item in Songs)
+            {
+                if (item.Title.Equals(title))
+                {
+                    this.Songs.Remove(item);
+                    break;
+                }
+            }
+        }
 
+        private void PerformPlayAgain()
+        {
+            Play_Media_Element();
+        }
+
+
+        private void PerformSave()
+        {
+            savePopUp = new Popup();
+            savePopUp.VerticalOffset = 250;
+            savePopUp.HorizontalOffset = 100;
+            MainPage.currentMainPage.IsHitTestVisible = false;
+            popUpWindowSave = new PopUpWindowSave();
+            savePopUp.Child = popUpWindowSave;
+            savePopUp.IsOpen = true;
+        }
+
+        private async void PerformSavePlaylist(object parameter)
+        {
+            TextBox playlistNameTextBox = popUpWindowSave.FindName("playlistNameTextBox") as TextBox;
+            Playlist playlist = new Playlist();
+
+            if (!playlistNameTextBox.Equals(null))
+            {
+                playlist.PlaylistName = playlistNameTextBox.Text;
+                playlist.PlayListFileName = playlistNameTextBox.Text + ".txt";
+
+                ListOfPlayLists.Add(playlist);
+
+                await saveStringToLocalFile(playlist.PlayListFileName);
+
+                MainPage.currentMainPage.IsHitTestVisible = true;
+                savePopUp.IsOpen = false;
+            }
+        }
+
+        private void PerformCancelSaving()
+        {
+            MainPage.currentMainPage.IsHitTestVisible = true;
+            savePopUp.IsOpen = false;
+        }
+
+        private void PerformLoad()
+        {
+            loadPopUp = new Popup();
+            loadPopUp.VerticalOffset = 250;
+            loadPopUp.HorizontalOffset = 100;
+            MainPage.currentMainPage.IsHitTestVisible = false;
+            popUpWindowLoad = new PopUpWindowLoad();
+            loadPopUp.Child = popUpWindowLoad;
+            loadPopUp.IsOpen = true;
+        }
+
+        private void PerformLoadPlaylist()
+        {
+            if (currentPlaylist != null)
+            {
+                MainPage.currentMainPage.IsHitTestVisible = true;
+                loadPopUp.IsOpen = false;
+                ConvertToList(currentPlaylist.PlayListFileName);
+            }
+        }
+
+        private void PerformCancelLoading()
+        {
+            MainPage.currentMainPage.IsHitTestVisible = true;
+            loadPopUp.IsOpen = false;
+        }
+
+
+        /// <summary>
+        /// Helpers
+        /// </summary>
+        /// <param name="files"></param>
         private void DisplayFiles(StorageFile[] files)
         {
             if (files != null)
@@ -311,6 +500,49 @@ namespace AudioPlayer.ViewModels
             //MainPage.currentMainPage.mPlayer.Source = new Uri(this.CurrentSong.Path, UriKind.RelativeOrAbsolute);
             //MainPage.currentMainPage.mPlayer.Play();
             this.MyMediaElement.Play();
+        }
+
+        private async Task saveStringToLocalFile(string filename)
+        {
+            string info = JsonConvert.SerializeObject(this.Songs, Formatting.Indented);
+
+            // saves the string 'content' to a file 'filename' in the app's local storage folder
+            byte[] fileBytes = System.Text.Encoding.UTF8.GetBytes(info.ToCharArray());
+
+            // create a file with the given filename in the local folder; replace any existing file with the same name
+            StorageFile file = await Windows.Storage.ApplicationData.Current.LocalFolder.CreateFileAsync(filename, CreationCollisionOption.ReplaceExisting);
+
+            // write the char array created from the content string into the file
+            using (var stream = await file.OpenStreamForWriteAsync())
+            {
+                stream.Write(fileBytes, 0, fileBytes.Length);
+            }
+        }
+
+        public async Task<string> ReadFileContentsAsync(string fileName)
+        {
+            var folder = ApplicationData.Current.LocalFolder;
+
+            try
+            {
+                var file = await folder.OpenStreamForReadAsync(fileName);
+
+                using (var streamReader = new StreamReader(file))
+                {
+                    return streamReader.ReadToEnd();
+                }
+            }
+            catch (Exception)
+            {
+                return string.Empty;
+            }
+        }
+
+        public async void ConvertToList(string fileName)
+        {
+            var list = await this.ReadFileContentsAsync(fileName);
+            ObservableCollection<Song> s = JsonConvert.DeserializeObject<ObservableCollection<Song>>(list);
+            this.Songs = s;
         }
     }
 }

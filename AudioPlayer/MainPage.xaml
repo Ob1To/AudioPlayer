@@ -158,9 +158,33 @@
                 Name="AddButton"
                 Command="{Binding Add}"
                 Grid.Row="5" 
-                Grid.Column="4">
+                Grid.ColumnSpan="6"
+                Grid.Column="0"
+                HorizontalAlignment="Right">
             <Button.Background>
                 <ImageBrush ImageSource="Assets/LoadButton.png" Stretch="Uniform"/>
+            </Button.Background>
+        </Button>
+
+        <Button
+            Grid.Row="5"
+            Grid.Column="0"
+            Grid.ColumnSpan="6"
+            HorizontalAlignment="Left"
+            Command="{Binding Save}">
+            <Button.Background>
+                <ImageBrush Stretch="Uniform" ImageSource="Assets/button_save_playlist.png"/>
+            </Button.Background>
+        </Button>
+        
+         <Button
+            Grid.Row="5"
+            Grid.Column="0"
+            Grid.ColumnSpan="6"
+            HorizontalAlignment="Center"
+            Command="{Binding Load}">
+            <Button.Background>
+                <ImageBrush Stretch="Uniform" ImageSource="Assets/button_load_playlist.png"/>
             </Button.Background>
         </Button>
     </Grid>
