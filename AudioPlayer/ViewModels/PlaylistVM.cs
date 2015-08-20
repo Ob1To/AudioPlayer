@@ -23,104 +23,6 @@ namespace AudioPlayer.ViewModels
 
     public class PlaylistVM : BaseVM
     {
-
-        //private TimeSpan TotalTime;
-        //private Slider timelineSlider;
-
-        //public Slider TimelineSlider
-        //{
-        //    get
-        //    {
-        //        if (this.timelineSlider == null)
-        //        {
-        //            //this.timelineSlider = new Slider();
-        //            this.timelineSlider = MainPage.currentMainPage.FindName("mySlider") as Slider;
-        //        }
-        //        return this.timelineSlider;
-        //    }
-        //    set
-        //    {
-        //        if (this.timelineSlider != value)
-        //        {
-        //            this.timelineSlider = value;
-        //            OnPropertyChanged("TimelineSlider");
-        //        }
-        //    }
-        //}
-
-
-        //private DispatcherTimer timer;
-
-        //public DispatcherTimer Timer
-        //{
-        //    get
-        //    {
-        //        if (this.timer == null)
-        //        {
-        //            this.timer = new DispatcherTimer();
-        //        }
-        //        return this.timer;
-        //    }
-        //    set
-        //    {
-        //        this.timer = value;
-        //    }
-        //}
-
-        //private void SetupTimer()
-        //{
-        //    Timer.Interval = TimeSpan.FromSeconds(TimelineSlider.StepFrequency);
-        //    StartTimer();
-        //}
-
-        //private void timerTick(object sender, object e)
-        //{
-        //    if (TotalTime.TotalSeconds > 0)
-        //    {
-        //        timelineSlider.Value = MyMediaElement.Position.TotalSeconds /
-        //                           TotalTime.TotalSeconds;
-        //    }
-        //}
-
-        //private void StartTimer()
-        //{
-        //    timer.Tick += timerTick;
-        //    timer.Start();
-        //}
-
-
-        //private double SliderFrequency(TimeSpan timevalue)
-        //{
-        //    double stepfrequency = -1;
-
-        //    double absvalue = (int)Math.Round(
-        //        timevalue.TotalSeconds, MidpointRounding.AwayFromZero);
-
-        //    stepfrequency = (int)(Math.Round(absvalue / 100));
-
-        //    if (timevalue.TotalMinutes >= 10 && timevalue.TotalMinutes < 30)
-        //    {
-        //        stepfrequency = 10;
-        //    }
-        //    else if (timevalue.TotalMinutes >= 30 && timevalue.TotalMinutes < 60)
-        //    {
-        //        stepfrequency = 30;
-        //    }
-        //    else if (timevalue.TotalHours >= 1)
-        //    {
-        //        stepfrequency = 60;
-        //    }
-
-        //    if (stepfrequency == 0) stepfrequency += 1;
-
-        //    if (stepfrequency == 1)
-        //    {
-        //        stepfrequency = absvalue / 100;
-        //    }
-
-        //    return stepfrequency;
-        //}
-
         private string songNameTextBlock;
         public string SongNameTextBlock
         {
@@ -190,19 +92,6 @@ namespace AudioPlayer.ViewModels
                     this.myListBox = MainPage.currentMainPage.FindName("listBoxOfSongs") as ListBox;
                 }
                 return this.myListBox;
-            }
-        }
-
-        private Slider mySlider;
-        public Slider MySlider
-        {
-            get
-            {
-                if (this.mySlider == null)
-                {
-                    this.mySlider = MainPage.currentMainPage.FindName("AudioPlayerSeek") as Slider;
-                }
-                return this.mySlider;
             }
         }
 
@@ -417,13 +306,11 @@ namespace AudioPlayer.ViewModels
         private void Play_Media_Element()
         {
             this.MyMediaElement.Source = new Uri(this.CurrentSong.Path, UriKind.RelativeOrAbsolute);
-            //TotalTime = MyMediaElement.NaturalDuration.TimeSpan;
             this.SongNameTextBlock = this.CurrentSong.Title.Substring(0, currentSong.Title.Length - 4);
             //this.MyMediaElement = MainPage.currentMainPage.FindName("mPlayer") as MediaElement;
             //MainPage.currentMainPage.mPlayer.Source = new Uri(this.CurrentSong.Path, UriKind.RelativeOrAbsolute);
             //MainPage.currentMainPage.mPlayer.Play();
             this.MyMediaElement.Play();
-            //SetupTimer();
         }
     }
 }
