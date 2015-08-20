@@ -1,0 +1,64 @@
+﻿<Page
+    x:Class="AudioPlayer.PopUpWindowLoad"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:AudioPlayer"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock
+            Text="Playlists"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            FontSize="28"/>
+        <ListBox 
+                 Name="listBoxOfPlaylist"
+                 Grid.Row="1"
+                 ItemsSource="{Binding ListOfPlayLists}"
+                 SelectedItem="{Binding CurrentPlaylist, Mode=TwoWay}"
+                 HorizontalContentAlignment="Stretch">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                    <TextBlock
+                            Grid.Column="0"
+                            FontSize="20"
+                            Text="{Binding PlaylistName}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                </Style>
+            </ListBox.ItemContainerStyle>
+        </ListBox>
+
+        <StackPanel
+            Orientation="Horizontal"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            Grid.Row="2">
+            
+            <Button
+                Content="Cancel"
+                HorizontalAlignment="Stretch"
+                Command="{Binding CancelLoading}"/>
+
+            <Button
+                Content="Load"
+                Command="{Binding LoadPlaylist}"
+                HorizontalAlignment="Stretch"/>
+
+        </StackPanel>
+    </Grid>
+</Page>
