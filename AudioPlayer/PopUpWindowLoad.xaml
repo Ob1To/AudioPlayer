@@ -5,14 +5,28 @@
     xmlns:local="using:AudioPlayer"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    mc:Ignorable="d">
 
-    <Grid>
+    <Page.Resources>
+        <Style TargetType="Page">
+            <Setter Property="BorderBrush" Value="White"/>
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Bottom"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+        <Style TargetType="ListBox">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="Background" Value="Black"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+    </Page.Resources>
+    <Grid Background="Black">
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="4*"/>
-            <RowDefinition Height="1*"/>
+            <RowDefinition Height="0.8*"/>
         </Grid.RowDefinitions>
 
         <TextBlock
@@ -24,8 +38,7 @@
                  Name="listBoxOfPlaylist"
                  Grid.Row="1"
                  ItemsSource="{Binding ListOfPlayLists}"
-                 SelectedItem="{Binding CurrentPlaylist, Mode=TwoWay}"
-                 HorizontalContentAlignment="Stretch">
+                 SelectedItem="{Binding CurrentPlaylist, Mode=TwoWay}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -38,27 +51,30 @@
             </ListBox.ItemTemplate>
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
                 </Style>
             </ListBox.ItemContainerStyle>
         </ListBox>
 
-        <StackPanel
-            Orientation="Horizontal"
-            HorizontalAlignment="Stretch"
-            VerticalAlignment="Stretch"
-            Grid.Row="2">
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
             
             <Button
+                BorderBrush="Transparent"
+                HorizontalAlignment="Center"
+                Grid.Column="1"
                 Content="Cancel"
-                HorizontalAlignment="Stretch"
                 Command="{Binding CancelLoading}"/>
 
             <Button
+                BorderBrush="Transparent"
+                HorizontalAlignment="Center"
+                Grid.Column="0"
                 Content="Load"
-                Command="{Binding LoadPlaylist}"
-                HorizontalAlignment="Stretch"/>
-
-        </StackPanel>
+                Command="{Binding LoadPlaylist}"/>
+        </Grid>
     </Grid>
 </Page>

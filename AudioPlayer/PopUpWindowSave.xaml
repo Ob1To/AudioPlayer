@@ -5,58 +5,69 @@
     xmlns:local="using:AudioPlayer"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    mc:Ignorable="d" 
+    Background="Black">
 
-    <Grid Background="Bisque"
-          HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch">
+    <Page.Resources>
+        
+        <Style TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Bottom"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="Background" Value="Black"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+    </Page.Resources>
+    <Grid Background="Black">
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock 
-                        Text="Playlist name"
-                        Foreground="Black"
-                        FontSize="25"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Grid.Row="0"
-                        Grid.Column="0"
-                        Grid.ColumnSpan="2"/>
+        <TextBlock
+            Text="Playlist name"
+            FontSize="30"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Grid.Row="0"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"/>
+
         <TextBox
-                        Name ="playlistNameTextBox"
-                        Grid.Row="1"
-                        Grid.Column="0"
-                        Grid.ColumnSpan="2"
-                        VerticalAlignment="Stretch"/>
+            Background="Black"
+            VerticalAlignment="Stretch"
+            Name ="playlistNameTextBox"
+            Grid.Row="1"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"/>
 
         <Button
-                        Name="buttonCancel"
-                        Grid.Row="2"
-                        Grid.Column="0"
-                        Command="{Binding CancelSaving}"
-                        Foreground="Black"
-                        BorderThickness="0"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch"
-                        Content="Cancel"/>
+            BorderBrush="Transparent"
+            VerticalAlignment="Bottom"
+            
+            HorizontalAlignment="Center"
+            Name="buttonCancel"
+            Grid.Row="2"
+            Grid.Column="0"
+            Command="{Binding CancelSaving}"
+            Content="Cancel"/>
 
         <Button
-                        Name="buttonSave"            
-                        Grid.Row="2"
-                        Grid.Column="1"
-                        Command="{Binding SavePlaylist}"
-                        BorderThickness="0"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch"
-                        Foreground="Black"
-                        Content="Save"/>
+            VerticalAlignment="Bottom"
+            BorderBrush="Transparent"
+            HorizontalAlignment="Center"
+            Name="buttonSave"            
+            Grid.Row="2"
+            Grid.Column="1"
+            Command="{Binding SavePlaylist}"
+            Content="Save"/>
     </Grid>
 </Page>
