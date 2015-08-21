@@ -1,4 +1,5 @@
-﻿using AudioPlayer.ViewModels;
+﻿using AudioPlayer.Common;
+using AudioPlayer.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,6 +14,7 @@ using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
+using Newtonsoft.Json;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
@@ -50,7 +52,15 @@ namespace AudioPlayer
         /// This parameter is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            Windows.Storage.ApplicationDataContainer localSettings =
+                Windows.Storage.ApplicationData.Current.LocalSettings;
 
+            if (localSettings.Values.ContainsKey("value"))
+            {
+                string desirializeData = localSettings.Values["value"].ToString();
+
+                myPlaylist.ListOfPlayLists = JsonConvert.DeserializeObject<ObservableCollection<Playlist>>(desirializeData);
+            }
             //InputPane.GetForCurrentView().Showing += onKeyboardShowing;
             //InputPane.GetForCurrentView().Hiding += onKeyboardHidding;
             // TODO: Prepare page for display here.
@@ -60,6 +70,5 @@ namespace AudioPlayer
             // If you are using the NavigationHelper provided by some templates,
             // this event is handled for you.,
         }
-
     }
 }
