@@ -82,9 +82,13 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AttachedProperties\ListBoxCommands.cs" />
     <Compile Include="Commands\DelegateCommand.cs" />
-    <Compile Include="Commands\DelegateCommandWithParameters.cs" />
     <Compile Include="Commands\RelayCommand.cs" />
+    <Compile Include="Common\NavigationHelper.cs" />
+    <Compile Include="Common\ObservableDictionary.cs" />
+    <Compile Include="Common\RelayCommand.cs" />
+    <Compile Include="Common\SuspensionManager.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>

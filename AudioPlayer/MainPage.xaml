@@ -6,6 +6,7 @@
     xmlns:local="using:AudioPlayer"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ap="using:AudioPlayer.AttachedProperties"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Page.Resources>
@@ -16,7 +17,7 @@
             <Setter Property="Foreground" Value="Black"/>
         </Style>
         <Style TargetType="Button">
-            <Setter Property="Height" Value="80"/>
+            <Setter Property="VerticalAlignment" Value="Stretch"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="BorderBrush" Value="Transparent"/>
         </Style>
@@ -43,6 +44,12 @@
             <ColumnDefinition Width="0.4*" />
         </Grid.ColumnDefinitions>
 
+        <Image 
+            Grid.Row="0"
+            Grid.RowSpan="2"
+            Grid.Column="0"
+            Source="Assets/cloud-icon.png"/>
+
         <MediaElement
             Margin="9,0,9,0"
             x:Name="mPlayer"
@@ -65,17 +72,12 @@
             HorizontalAlignment="Center"
             FontSize="20"/>
 
-        <!--<Image
-            Grid.Row="0"
-            Grid.Column="0"
-            Grid.RowSpan="2"
-            Source="/Assets/cloud-icon.png" Stretch="UniformToFill"/>-->
 
         <Button 
                Grid.Row="1"
                Grid.Column="1"
                Grid.ColumnSpan="1"
-                Command="{Binding GoLeft}">
+               Command="{Binding GoLeft}">
             <Button.Background>
                 <ImageBrush ImageSource="Assets/button_left.png" Stretch="Uniform"/>
             </Button.Background>
@@ -99,9 +101,10 @@
             </Button.Background>
         </Button>
 
-        <Button Grid.Row="1"
+        <Button
                 Grid.Column="4"
-                Command="{Binding GoRight}">
+                Command="{Binding GoRight}" 
+                Grid.Row="1">
             <Button.Background>
                 <ImageBrush ImageSource="Assets/button_right.png" Stretch="Uniform"/>
             </Button.Background>
@@ -114,20 +117,15 @@
         <Border Grid.Row="5"
         BorderThickness="0,3,0,0"
         Grid.ColumnSpan="6"/>
-
-        <Image
-            Height="85"
-            HorizontalAlignment="Left"
-            Grid.Row="2"
-            Grid.Column="0"
-            Source="Assets/musicIcon.png" />
-
+        
         <ListBox 
                  Name="listBoxOfSongs"
                  ItemsSource="{Binding Songs}"
                  Grid.Row="4"
                  Grid.Column="0"
+                 Background="Transparent"
                  Grid.ColumnSpan="6"
+                 ap:ListBoxCommands.DoubleTapped="{Binding DoubleClick}"
                  SelectedItem="{Binding CurrentSong, Mode=TwoWay}"
                  HorizontalContentAlignment="Stretch">
             <ListBox.ItemTemplate>
@@ -140,8 +138,7 @@
                         <TextBlock
                             Grid.Column="0"
                             FontSize="25"
-                            Text="{Binding Title}" 
-                            DoubleTapped="TextBlock_DoubleTapped"/>
+                            Text="{Binding Title}"/>
                         <Button Grid.Column="1"
                                 CommandParameter="{Binding Title}"
                                 Command="{Binding DataContext.Delete, ElementName=mPage}"

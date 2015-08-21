@@ -17,6 +17,8 @@ using System.Runtime.Serialization;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
+using Windows.UI.ViewManagement;
+using Windows.UI.Xaml.Media;
 
 namespace AudioPlayer.ViewModels
 {
@@ -77,7 +79,6 @@ namespace AudioPlayer.ViewModels
                 return this.myMediaElement;
             }
         }
-        
 
         private ListBox myListBox;
         public ListBox MyListBox
@@ -87,17 +88,11 @@ namespace AudioPlayer.ViewModels
                 if (this.myListBox == null)
                 {
                     this.myListBox = MainPage.currentMainPage.FindName("listBoxOfSongs") as ListBox;
+                    
                 }
-                //myListBox.DoubleTapped += MyListBox_DoubleTapped;
                 return this.myListBox;
             }
         }
-
-        private void MyListBox_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
-        {
-            PerformPlay();
-        }
-
 
         private ObservableCollection<Song> songs;
         public ObservableCollection<Song> Songs
@@ -130,6 +125,13 @@ namespace AudioPlayer.ViewModels
                     this.listOfPlaylists = new ObservableCollection<Playlist>();
                 }
                 return this.listOfPlaylists;
+            }
+            set
+            {
+                if (value != null)
+                {
+                    this.listOfPlaylists = value;
+                }
             }
         }
 
@@ -170,7 +172,6 @@ namespace AudioPlayer.ViewModels
                 {
                     this.playCommand = new DelegateCommand(this.PerformPlay);
                 }
-
                 return this.playCommand;
             }
         }
@@ -320,11 +321,24 @@ namespace AudioPlayer.ViewModels
             }
         }
 
+        private ICommand doubleClickCommand;
+        public ICommand DoubleClick
+        {
+            get
+            {
+                if (this.doubleClickCommand == null)
+                {
+                    this.doubleClickCommand = new DelegateCommand(this.PerformDoubleClick);
+                }
+                return this.doubleClickCommand;
+            }
+        }
 
+        
         /// <summary>
         /// Commands
         /// </summary>
-        internal void PerformPlay()
+        private void PerformPlay()
         {
             if (this.CurrentSong != null)
             {
@@ -333,6 +347,8 @@ namespace AudioPlayer.ViewModels
                     Play_Media_Element();
                 }
             }
+
+            
         }
         private void PerformStop()
         {
@@ -355,7 +371,10 @@ namespace AudioPlayer.ViewModels
                 {
                     currentSong = this.Songs.ElementAt(this.Songs.Count - 1);
                 }
-                Play_Media_Element();
+                if (this.MyMediaElement.CurrentState == MediaElementState.Playing)
+                {
+                    Play_Media_Element();
+                }
                 this.MyListBox.SelectedItem = currentSong;
             }
         }
@@ -373,7 +392,10 @@ namespace AudioPlayer.ViewModels
                 {
                     currentSong = this.Songs.ElementAt(0);
                 }
-                Play_Media_Element();
+                if (this.MyMediaElement.CurrentState == MediaElementState.Playing)
+                {
+                    Play_Media_Element();
+                }
                 this.MyListBox.SelectedItem = currentSong;
             }
         }
@@ -398,12 +420,6 @@ namespace AudioPlayer.ViewModels
                 }
             }
         }
-
-        private void PerformPlayAgain()
-        {
-            Play_Media_Element();
-        }
-
 
         private void PerformSave()
         {
@@ -431,7 +447,7 @@ namespace AudioPlayer.ViewModels
 
                 ListOfPlayLists.Add(playlist);
 
-                await saveStringToLocalFile(playlist.PlayListFileName);
+                await saveStringToLocalFile(playlist.PlayListFileName,this.Songs);
 
                 MainPage.currentMainPage.IsHitTestVisible = true;
                 savePopUp.IsOpen = false;
@@ -472,7 +488,10 @@ namespace AudioPlayer.ViewModels
             MainPage.currentMainPage.IsHitTestVisible = true;
             loadPopUp.IsOpen = false;
         }
-
+        private void PerformDoubleClick()
+        {
+            this.PerformPlay();
+        }
 
         /// <summary>
         /// Helpers
@@ -516,9 +535,9 @@ namespace AudioPlayer.ViewModels
             this.MyMediaElement.Play();
         }
 
-        private async Task saveStringToLocalFile(string filename)
+        internal async Task saveStringToLocalFile(string filename,object obj)
         {
-            string info = JsonConvert.SerializeObject(this.Songs, Formatting.Indented);
+            string info = JsonConvert.SerializeObject(obj, Formatting.Indented);
 
             // saves the string 'content' to a file 'filename' in the app's local storage folder
             byte[] fileBytes = System.Text.Encoding.UTF8.GetBytes(info.ToCharArray());
