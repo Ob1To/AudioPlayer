@@ -87,9 +87,8 @@ namespace AudioPlayer.ViewModels
                 if (this.myListBox == null)
                 {
                     this.myListBox = MainPage.currentMainPage.FindName("listBoxOfSongs") as ListBox;
-                    
                 }
-                myListBox.DoubleTapped += MyListBox_DoubleTapped;
+                //myListBox.DoubleTapped += MyListBox_DoubleTapped;
                 return this.myListBox;
             }
         }
@@ -171,6 +170,7 @@ namespace AudioPlayer.ViewModels
                 {
                     this.playCommand = new DelegateCommand(this.PerformPlay);
                 }
+
                 return this.playCommand;
             }
         }
@@ -324,7 +324,7 @@ namespace AudioPlayer.ViewModels
         /// <summary>
         /// Commands
         /// </summary>
-        private void PerformPlay()
+        internal void PerformPlay()
         {
             if (this.CurrentSong != null)
             {

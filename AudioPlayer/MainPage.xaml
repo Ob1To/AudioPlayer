@@ -16,6 +16,7 @@
             <Setter Property="Foreground" Value="Black"/>
         </Style>
         <Style TargetType="Button">
+            <Setter Property="Height" Value="80"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="BorderBrush" Value="Transparent"/>
         </Style>
@@ -23,26 +24,27 @@
             <Setter Property="BorderBrush" Value="Black"/>
         </Style>
     </Page.Resources>
-    
+
     <Grid Background="{StaticResource BrushOne}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="1.5*"/>
-            <RowDefinition Height="1.5*"/>
+            <RowDefinition Height="1.2*"/>
+            <RowDefinition Height="2*"/>
             <RowDefinition Height="2*"/>
             <RowDefinition Height="0.1*"/>
             <RowDefinition Height="12*"/>
             <RowDefinition Height="1.5*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="1.5*" />
             <ColumnDefinition Width="1*" />
             <ColumnDefinition Width="1*" />
             <ColumnDefinition Width="1*" />
             <ColumnDefinition Width="1*" />
-            <ColumnDefinition Width="0.6*" />
+            <ColumnDefinition Width="0.4*" />
         </Grid.ColumnDefinitions>
 
         <MediaElement
+            Margin="9,0,9,0"
             x:Name="mPlayer"
             Source="{Binding CurrentSong.Path}"
             Grid.Row="2"
@@ -52,7 +54,6 @@
             RealTimePlayback="True"
             AreTransportControlsEnabled="True"
             AutoPlay="True">
-            
         </MediaElement>
 
         <TextBlock
@@ -64,11 +65,11 @@
             HorizontalAlignment="Center"
             FontSize="20"/>
 
-        <Image
+        <!--<Image
             Grid.Row="0"
             Grid.Column="0"
             Grid.RowSpan="2"
-            Source="/Assets/cloud-icon.png" Stretch="UniformToFill"/>
+            Source="/Assets/cloud-icon.png" Stretch="UniformToFill"/>-->
 
         <Button 
                Grid.Row="1"
@@ -114,6 +115,13 @@
         BorderThickness="0,3,0,0"
         Grid.ColumnSpan="6"/>
 
+        <Image
+            Height="85"
+            HorizontalAlignment="Left"
+            Grid.Row="2"
+            Grid.Column="0"
+            Source="Assets/musicIcon.png" />
+
         <ListBox 
                  Name="listBoxOfSongs"
                  ItemsSource="{Binding Songs}"
@@ -132,7 +140,8 @@
                         <TextBlock
                             Grid.Column="0"
                             FontSize="25"
-                            Text="{Binding Title}"/>
+                            Text="{Binding Title}" 
+                            DoubleTapped="TextBlock_DoubleTapped"/>
                         <Button Grid.Column="1"
                                 CommandParameter="{Binding Title}"
                                 Command="{Binding DataContext.Delete, ElementName=mPage}"
@@ -175,8 +184,8 @@
                 <ImageBrush Stretch="Uniform" ImageSource="Assets/button_save_playlist.png"/>
             </Button.Background>
         </Button>
-        
-         <Button
+
+        <Button
             Grid.Row="5"
             Grid.Column="0"
             Grid.ColumnSpan="6"

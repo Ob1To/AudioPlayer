@@ -61,7 +61,12 @@ namespace AudioPlayer
             // this event is handled for you.,
         }
 
-        
+        private void TextBlock_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
+        {
+            myPlaylist.PerformPlay();
+        }
+
+
         //private void onKeyboardShowing(InputPane sender, InputPaneVisibilityEventArgs args)
         //{
         //    KeyboardVisible = true;
