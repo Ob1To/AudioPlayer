@@ -16,16 +16,17 @@
             <Setter Property="Foreground" Value="White"/>
         </Style>
         <Style TargetType="TextBox">
+            <Setter Property="TextWrapping" Value="Wrap"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="Background" Value="Black"/>
-            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Foreground" Value="Black"/>
         </Style>
     </Page.Resources>
     <Grid Background="Black">
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="80"/>
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
@@ -50,9 +51,9 @@
             Grid.ColumnSpan="2"/>
 
         <Button
+            FontSize="30"
             BorderBrush="Transparent"
-            VerticalAlignment="Bottom"
-            
+            VerticalAlignment="Center"
             HorizontalAlignment="Center"
             Name="buttonCancel"
             Grid.Row="2"
@@ -61,7 +62,8 @@
             Content="Cancel"/>
 
         <Button
-            VerticalAlignment="Bottom"
+            FontSize="30"
+            VerticalAlignment="Center"
             BorderBrush="Transparent"
             HorizontalAlignment="Center"
             Name="buttonSave"            

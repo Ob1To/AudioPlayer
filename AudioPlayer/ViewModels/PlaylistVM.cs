@@ -77,6 +77,7 @@ namespace AudioPlayer.ViewModels
                 return this.myMediaElement;
             }
         }
+        
 
         private ListBox myListBox;
         public ListBox MyListBox
@@ -86,10 +87,18 @@ namespace AudioPlayer.ViewModels
                 if (this.myListBox == null)
                 {
                     this.myListBox = MainPage.currentMainPage.FindName("listBoxOfSongs") as ListBox;
+                    
                 }
+                myListBox.DoubleTapped += MyListBox_DoubleTapped;
                 return this.myListBox;
             }
         }
+
+        private void MyListBox_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
+        {
+            PerformPlay();
+        }
+
 
         private ObservableCollection<Song> songs;
         public ObservableCollection<Song> Songs
@@ -399,11 +408,14 @@ namespace AudioPlayer.ViewModels
         private void PerformSave()
         {
             savePopUp = new Popup();
-            savePopUp.VerticalOffset = 250;
-            savePopUp.HorizontalOffset = 100;
+            //savePopUp.VerticalOffset = (Window.Current.Bounds.Height / 2);
+            //savePopUp.VerticalOffset = 250;
+            //savePopUp.HorizontalOffset = 100;
             MainPage.currentMainPage.IsHitTestVisible = false;
             popUpWindowSave = new PopUpWindowSave();
             savePopUp.Child = popUpWindowSave;
+            popUpWindowSave.Width = Window.Current.Bounds.Width;
+            popUpWindowSave.Height = Window.Current.Bounds.Height / 2;
             savePopUp.IsOpen = true;
         }
 
@@ -435,11 +447,13 @@ namespace AudioPlayer.ViewModels
         private void PerformLoad()
         {
             loadPopUp = new Popup();
-            loadPopUp.VerticalOffset = 250;
-            loadPopUp.HorizontalOffset = 100;
+            //loadPopUp.VerticalOffset = 250;
+            //loadPopUp.HorizontalOffset = 100;
             MainPage.currentMainPage.IsHitTestVisible = false;
             popUpWindowLoad = new PopUpWindowLoad();
             loadPopUp.Child = popUpWindowLoad;
+            popUpWindowLoad.Width = Window.Current.Bounds.Width;
+            popUpWindowLoad.Height = Window.Current.Bounds.Height / 2;
             loadPopUp.IsOpen = true;
         }
 

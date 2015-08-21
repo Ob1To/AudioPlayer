@@ -143,7 +143,6 @@
                                 ImageSource="Assets/button_delete.png"/>
                             </Button.Background>
                         </Button>
-
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>

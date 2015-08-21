@@ -11,6 +11,7 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
 using Windows.Storage.Pickers;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -31,6 +32,8 @@ namespace AudioPlayer
         private PlaylistVM myPlaylist = new PlaylistVM();
         public static MainPage currentMainPage;
 
+        public bool KeyboardVisible { get; private set; }
+
         public MainPage()
         {
             this.InitializeComponent();
@@ -47,18 +50,34 @@ namespace AudioPlayer
         /// This parameter is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+
+            //InputPane.GetForCurrentView().Showing += onKeyboardShowing;
+            //InputPane.GetForCurrentView().Hiding += onKeyboardHidding;
             // TODO: Prepare page for display here.
             // TODO: If your application contains multiple pages, ensure that you are
             // handling the hardware Back button by registering for the
             // Windows.Phone.UI.Input.HardwareButtons.BackPressed event.
             // If you are using the NavigationHelper provided by some templates,
-            // this event is handled for you.
+            // this event is handled for you.,
         }
 
-        private void Grid_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
-        {
-            
-        }
+        
+        //private void onKeyboardShowing(InputPane sender, InputPaneVisibilityEventArgs args)
+        //{
+        //    KeyboardVisible = true;
+
+        //}
+
+        //private void onKeyboardHidding(InputPane sender, InputPaneVisibilityEventArgs args)
+        //{
+
+        //    KeyboardVisible = false;
+        //}
+
+        //private void Grid_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
+        //{
+
+        //}
 
     }
 }

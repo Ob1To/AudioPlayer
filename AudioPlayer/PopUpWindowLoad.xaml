@@ -26,14 +26,14 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="4*"/>
-            <RowDefinition Height="0.8*"/>
+            <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
 
         <TextBlock
-            Text="Playlists"
+            FontSize="30"
+            Text="Playlists Name"
             HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            FontSize="28"/>
+            VerticalAlignment="Center"/>
         <ListBox 
                  Name="listBoxOfPlaylist"
                  Grid.Row="1"
@@ -63,6 +63,7 @@
             </Grid.ColumnDefinitions>
             
             <Button
+                FontSize="30"
                 BorderBrush="Transparent"
                 HorizontalAlignment="Center"
                 Grid.Column="1"
@@ -70,6 +71,7 @@
                 Command="{Binding CancelLoading}"/>
 
             <Button
+                FontSize="30"
                 BorderBrush="Transparent"
                 HorizontalAlignment="Center"
                 Grid.Column="0"
