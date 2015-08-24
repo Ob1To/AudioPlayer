@@ -31,7 +31,6 @@ namespace AudioPlayer
     public sealed partial class App : Application
     {
         private TransitionCollection transitions;
-        private string appFileName = "appFileName.txt";
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -51,7 +50,7 @@ namespace AudioPlayer
         /// <param name="e">Details about the launch request and process.</param>
         protected override async void OnLaunched(LaunchActivatedEventArgs e)
         {
-            
+
 #if DEBUG
             if (System.Diagnostics.Debugger.IsAttached)
             {

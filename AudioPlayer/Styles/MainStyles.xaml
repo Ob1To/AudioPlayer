@@ -12,4 +12,17 @@
         </LinearGradientBrush.GradientStops>
     </LinearGradientBrush>
 
+    <ResourceDictionary.ThemeDictionaries>
+        <ResourceDictionary x:Key="Default">
+            <SolidColorBrush x:Key="TransportBackgroundBrush" Color="#44000000"/>
+            <SolidColorBrush x:Key="TransportReversedBackgroundBrush" Color="#BBFFFFFF"/>
+        </ResourceDictionary>
+        <ResourceDictionary x:Key="Light">
+            <SolidColorBrush x:Key="TransportBackgroundBrush" Color="#BBFFFFFF"/>
+            <SolidColorBrush x:Key="TransportReversedBackgroundBrush" Color="#44000000"/>
+        </ResourceDictionary>
+    </ResourceDictionary.ThemeDictionaries>
+
+    
+    
 </ResourceDictionary>

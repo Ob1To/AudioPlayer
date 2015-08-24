@@ -5,10 +5,14 @@
     xmlns:local="using:AudioPlayer">
 
     <Application.Resources>
+        
         <ResourceDictionary>
+            
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Styles/MainStyles.xaml"/>
+                
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
+
     </Application.Resources>
 </Application>

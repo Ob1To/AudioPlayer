@@ -88,7 +88,7 @@ namespace AudioPlayer.ViewModels
                 if (this.myListBox == null)
                 {
                     this.myListBox = MainPage.currentMainPage.FindName("listBoxOfSongs") as ListBox;
-                    
+
                 }
                 return this.myListBox;
             }
@@ -235,7 +235,7 @@ namespace AudioPlayer.ViewModels
             {
                 if (this.deleteCommand == null)
                 {
-                              this.deleteCommand = new RelayCommand(this.PerformDelete);
+                    this.deleteCommand = new RelayCommand(this.PerformDelete);
                 }
                 return this.deleteCommand;
             }
@@ -334,7 +334,7 @@ namespace AudioPlayer.ViewModels
             }
         }
 
-        
+
         /// <summary>
         /// Commands
         /// </summary>
@@ -348,14 +348,10 @@ namespace AudioPlayer.ViewModels
                 }
             }
 
-            
         }
         private void PerformStop()
         {
-            if (currentSong.Path != null)
-            {
-                this.MyMediaElement.Stop();
-            }
+            this.MyMediaElement.Stop();
         }
 
         private void PerformGoLeft()
@@ -447,7 +443,7 @@ namespace AudioPlayer.ViewModels
 
                 ListOfPlayLists.Add(playlist);
 
-                await saveStringToLocalFile(playlist.PlayListFileName,this.Songs);
+                await saveStringToLocalFile(playlist.PlayListFileName, this.Songs);
 
                 MainPage.currentMainPage.IsHitTestVisible = true;
                 savePopUp.IsOpen = false;
@@ -535,7 +531,7 @@ namespace AudioPlayer.ViewModels
             this.MyMediaElement.Play();
         }
 
-        internal async Task saveStringToLocalFile(string filename,object obj)
+        internal async Task saveStringToLocalFile(string filename, object obj)
         {
             string info = JsonConvert.SerializeObject(obj, Formatting.Indented);
 
