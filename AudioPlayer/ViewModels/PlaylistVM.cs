@@ -22,11 +22,7 @@ using Windows.UI.Xaml.Media;
 
 namespace AudioPlayer.ViewModels
 {
-    public sealed class SystemMediaTransportControls
-    {
-
-    }
-
+    
     public class PlaylistVM : BaseVM
     {
         private string songNameTextBlock;
@@ -187,6 +183,26 @@ namespace AudioPlayer.ViewModels
                 }
                 return this.stopCommand;
             }
+        }
+
+        private ICommand playNextSongCommand;
+
+        public ICommand PlayNext
+        {
+            get
+            {
+                if (this.playNextSongCommand == null)
+                {
+                    this.playNextSongCommand = new RelayCommand(this.PerformPlayNext);
+                }
+                return this.playNextSongCommand;
+            }
+        }
+
+        public void PerformPlayNext(object parameter)
+        {
+            PerformGoRight();
+            PerformPlay();
         }
 
         private ICommand goLeftCommand;

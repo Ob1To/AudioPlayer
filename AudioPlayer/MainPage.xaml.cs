@@ -70,5 +70,11 @@ namespace AudioPlayer
             // If you are using the NavigationHelper provided by some templates,
             // this event is handled for you.,
         }
+
+        private void mPlayer_MediaEnded(object sender, RoutedEventArgs e)
+        {
+            var plVM = this.DataContext as PlaylistVM;
+            plVM.PerformPlayNext(null);
+        }
     }
 }
