@@ -5,6 +5,18 @@
         <ResourceDictionary Source="/Styles/MainStyles.xaml" />
       </ResourceDictionary.MergedDictionaries>
       <vm:ViewModelLocator x:Key="Locator" xmlns:vm="using:AudioPlayer.ViewModel" />
-    </ResourceDictionary>
+            <SolidColorBrush x:Key="MediaButtonForegroundThemeBrush" Color="Blue" />
+            <SolidColorBrush x:Key="MediaButtonBackgroundThemeBrush" Color="Transparent" />
+            <SolidColorBrush x:Key="MediaButtonPointerOverForegroundThemeBrush" Color="#FFFFFFFF" />
+            <SolidColorBrush x:Key="MediaButtonPointerOverBackgroundThemeBrush" Color="#26FFFFFF" />
+            <SolidColorBrush x:Key="MediaButtonPressedForegroundThemeBrush" Color="#FF000000" />
+            <SolidColorBrush x:Key="MediaButtonPressedBackgroundThemeBrush" Color="#FFFFFFFF" />
+            <SolidColorBrush x:Key="MediaButtonPressedBorderThemeBrush" Color="#FFFFFFFF" />
+            <SolidColorBrush x:Key="MediaControlPanelVideoThemeBrush" Color="Red" />
+            <SolidColorBrush x:Key="MediaControlPanelAudioThemeBrush" Color="#FF000000" />
+            <SolidColorBrush x:Key="MediaDownloadProgressIndicatorThemeBrush" Color="#38FFFFFF" />
+            <SolidColorBrush x:Key="MediaErrorBackgroundThemeBrush" Color="#FF000000" />
+            <SolidColorBrush x:Key="MediaTextThemeBrush" Color="#FFFFFFFF" />
+        </ResourceDictionary>
   </Application.Resources>
 </Application>
